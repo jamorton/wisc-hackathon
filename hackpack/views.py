@@ -153,7 +153,8 @@ def hack_get_all_time_stats(hackathon_id):
 			user_commits[committer] = user_commits[committer] + 1
 			if ( user_commits[committer] > biggest ):
 				top_committer = committer
-			max_num_commits += len(commits)
+		
+		max_num_commits += len(commits)
 
 		os.system("git clone "+original)
 		before = os.getcwd()
