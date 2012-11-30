@@ -2,8 +2,10 @@
 from app import app
 from models import *
 from flask import render_template
+from auth import auth
 
 @app.route("/")
+@auth.login_required
 def dash_index():
 	return render_template("index.html")
 
@@ -18,8 +20,6 @@ def dash_present():
 @app.route("/dash-future")
 def dash_future():
 	return render_template("dash-future.html")
-
-
 
 """
 @app.route("/hackathon/create")
