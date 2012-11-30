@@ -4,7 +4,9 @@
 
     <title>Hackpack</title>
     <meta charset="utf-8" />
-
+<link rel="icon" 
+      type="image/png" 
+      href="../static/img/favicon.png">
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css" />
@@ -17,10 +19,17 @@
   </head>
   <body>
 
-    <div class="container">
+    <div class="container narrow">
       {% block content %}
       {% endblock %}
     </div>
 
+<footer id="footer"> 
+<div class="container">
+<p class="muted credit">
+Hackathon Submission Web App, Facebook Hackathon Finals - 2012 
+</p>
+</div>
+</footer>
   </body>
 </html>
