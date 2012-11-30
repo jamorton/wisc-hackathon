@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="#" id="login-button" class="btn btn-large btn-primary">Login with Facebook</a>
+
+<script type="text/javascript">
+  $(function() {
+    $("#login-button").click(function() {
+      FB.login(loginResponse);
+    });
+  });
+</script>
+
+{% endblock %}

@@ -17,6 +17,7 @@ class Hackathon(BaseModel):
 
 class User(BaseModel):
 	facebook_id = IntegerField(unique = True)
+	active = BooleanField(default = True)
 
 	@staticmethod
 	def get_or_create(fbid):
