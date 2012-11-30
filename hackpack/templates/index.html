@@ -1,57 +1,64 @@
-
-{% extends "base.html" %}
+se.html" %}
 
 {% block content %}
-    <form class="form-search">
-    <input type="text" class="input-medium search-query">
-    <button type="submit" class="btn">Search for hackathons</button>
-    </form>
-    <h1>HackPack</h1>
-<div class="row">
-<div class="span4">
+
   <!-- Carousel
     ================================================== -->
-    <div id="myCarousel" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="../static/img/carousel.png" alt="">
-        </div>
-        <div class="item">
-          <img src="../static/img/carousel2.png" alt="">
-        </div>
-        <div class="item">
-          <img src="../static/img/carousel3.png" alt="">
-        </div>
+
+<div class="masthead">
+    <h2>Create and Manage Hackathons</h2>
+</div>
+
+<div class="row">
+<div class="span2">&nbsp;</div>
+<div class="span8">
+<div id="myCarousel" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="../static/img/carousel.png" alt="">
+    </div>
+    <div class="item">
+      <img src="../static/img/carousel2.png" alt="">
+    </div>
+    <div class="item">
+      <img src="../static/img/carousel3.png" alt="">
+    </div>
+  </div>
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div><!-- /.carousel -->
+</div>
+<div class="span2">&nbsp;</div>
+
+</div>
+
+{% if hackathons_now %}
+  <h2>Current</h2>
+  <ul class="nav nav-pills nav-stacked">
+    {% for hackathon in hackathons_now %}
+      <li>
+	    <h3><a href="#">{{ hackathon.title }}</a></h3>
+        {{ hackathon.description }}. AT: {{ hackathon.location }}
+        <p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
+	  </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if hackathons_future %}
+  <h2>Future</h2>
+  <div>
+    {% for hackathon in hackathons_future %}
+      <div class="hackathon-item">
+        <h3><a href="#">{{ hackathon.title }}</a></h3>
+        {{ hackathon.description }}. AT: {{ hackathon.location }}
+        <p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
       </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-    </div><!-- /.carousel -->
-<!-- Create and event list ==== -->
-</div>
-<div class="span5">
-<a class="btn btn-primary">Create Event</a>
-
-    <ul class="nav nav-pills nav-stacked">
-
-	    {% for hackathon in hackathons %}
-	    <li>
-	    	<a href="#">
-			<h2>{{ hackathon.title }}  </h2>
-			{{ hackathon.description }}. AT: {{ hackathon.location }}
-			<p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
-		</a>
-	    </li>
-	    {% endfor %}
-    </ul>
-<h3>Current</h3>
-<ol>
-<li>Hackathon 1</li>
-<li>Hackathon 2</li>
-</ol>
-<h3>Upcoming</h3>
-</div>
-</div>
+    {% endfor %}
+  </div>
+{% endif %}
 
 <!-- /Create and event list -->
 
 {% endblock %}
+
