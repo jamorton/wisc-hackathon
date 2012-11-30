@@ -1,11 +1,12 @@
 
 from app import app
 from models import *
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, session
 from auth import auth
 from wtfpeewee.orm import model_form
 from util import get_object_or_404
 import datetime, urllib, urllib2
+from datetime import date
 
 @app.route("/")
 @auth.login_required
@@ -37,22 +38,25 @@ def hackathon_create():
 			form.populate_obj(hack)
 			hack.owner = auth.get_logged_in_user()
 			data = urllib.urlencode({
+				'access_token' : session["fb_token"],
 				'name' : hack.title,
-				'start_time' : hack.start_time,
-				'end_time' : hack.end_time,
-				'description' : hack.description,
-				'location' : hack.location})
-			event_id = urllib2.urlopen(urllib2.Request("http://www.facebook.com/"+hack.owner+"/events", data))
-			hack.facebook_id = event_id
+				'start_time' : date.isoformat(hack.start_date)})
+				#'end_time' : hack.end_date,
+				#'description' : hack.description,
+				#'location' : hack.location})
+			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
+			response = urllib2.urlopen(req)
+			event_id = response.read()
+			print event_id
+			event_id = event_id.replace("{\"id\":\"", "")
+			event_id = event_id.replace("\"}", "")
+			hack.facebook_id = int(event_id)
 			hack.save()
-			return redirect(url_for("dash", event_id))
+			return redirect(url_for("dash", hackathon_id = hack.id))
 	else:
 		form = HackathonForm()
 
 	return render_template("hackathon-create.html", form = form)
-
-
-
 
 
 """
