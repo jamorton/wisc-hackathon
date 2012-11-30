@@ -7,6 +7,8 @@ from wtfpeewee.orm import model_form
 from util import get_object_or_404
 import datetime
 import urllib, urllib2
+from json import JSONDecoder
+
 
 @app.route("/")
 @auth.login_required
@@ -39,12 +41,17 @@ def dash(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 	now = datetime.datetime.now()
 
+	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon_id)+"/attending", {})
+	response = urllib2.urlopen(req)
+	decoder = JSONDecoder()
+	attending = decoder.decode(response.read())["data"]
+
 	if now < hackathon.start_date:
-		return render_template("dash-future.html", hackathon = hackathon)
+		return render_template("dash-future.html", hackathon = hackathon, attending = attending)
 	elif now < hackathon.end_date:
-		return render_template("dash-present.html", hackathon = hackathon)
+		return render_template("dash-present.html", hackathon = hackathon, attending = attending)
 	else:
-		return render_template("dash-past.html", hackathon = hackathon)
+		return render_template("dash-past.html", hackathon = hackathon, attending = attending)
 
 HackathonForm = model_form(Hackathon, exclude=("facebook_id", "owner"))
 HackForm = model_form(Hack, exclude=("hackathon",))
@@ -68,9 +75,8 @@ def hackathon_create():
 				'location' : hack.location})
 			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
 			response = urllib2.urlopen(req)
-			event_id = response.read()
-			event_id = event_id.replace("{\"id\":\"", "")
-			event_id = event_id.replace("\"}", "")
+			decoder = JSONDecoder()
+			event_id = decoder.decode(response.read())["id"]
 			hack.facebook_id = int(event_id)
 			hack.save()
 			return redirect(url_for("dash", hackathon_id = hack.id))
