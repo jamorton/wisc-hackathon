@@ -220,7 +220,8 @@ def dash(hackathon_id):
 
 	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/attending?access_token="+session["fb_token"])
 	response = urllib2.urlopen(req)
-	response = response.read()
+	decoder = JSONDecoder()
+	response = decoder.decode(response.read())
 	people = response["data"]
 
 	for person in people:
@@ -228,7 +229,8 @@ def dash(hackathon_id):
 
 		req = urllib2.Request("https://graph.facebook.com/"+str(pid))
 		response = urllib2.urlopen(req)
-		response = response.read()
+		decoder = JSONDecoder()
+		response = decoder.decode(response.read())
 		if ( response["gender"] == "male" ):
 			number_males = number_males + 1
 		elif ( response["gender"] == "female" ):
