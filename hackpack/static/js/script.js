@@ -171,3 +171,29 @@ function resetTimer(){
 		tick();
 		$("#countdownbutton").html("Start Countdown");
 }
+
+var lastId = "-1";
+function checkUpdates(hid) {
+
+    $.post("/ajax/updates", {"hackathon_id": hid, "shoutouts_after": lastId}, function (data) {
+        for (var i = 0; i < data.shoutouts.length; i++) {
+            var so = data.shoutouts[i];
+            var html = '<div class="shoutout"><img style="width: 40px; height: 40px;" src="https://graph.facebook.com/'+so.fbid+'/picture" /> <b><fb:name uid="'+so.fbid+'" capitalize="true" />:</b> ' + so.message + '</div>';
+            $("#shoutout-area").prepend(html);
+        }
+        FB.XFBML.parse(document.getElementById("shoutout-area"));
+        lastId = data.last_id;
+    });
+}
+
+function shoutouts(hid) {
+    $("#shoutout-form").submit(function() {
+        var message = $("#shoutout-form input").val();
+        $("#shoutout-form input").val("");
+        $.post("/ajax/post-shoutout", {"hackathon_id": hid, "message": message}, function (data) {
+
+        });
+        return false;
+    });
+    setInterval("checkUpdates("+hid+")", 1000);
+}

@@ -5,7 +5,7 @@ from peewee import *
 
 from app import db
 
-__all__ = ["Hackathon", "User", "Hack", "create_tables"]
+__all__ = ["Hackathon", "User", "Hack", "Shoutout", "create_tables"]
 
 class BaseModel(db.Model):
 	pass
@@ -44,7 +44,13 @@ class Hack(BaseModel):
 	calculated = BooleanField(default=False)
 	stats = TextField(default="")
 
+class Shoutout(BaseModel):
+	user = ForeignKeyField(User)
+	hackathon = ForeignKeyField(Hackathon)
+	message = TextField()
+
 def create_tables():
 	Hackathon.create_table()
 	User.create_table()
 	Hack.create_table()
+	Shoutout.create_table()
