@@ -115,6 +115,9 @@ def walk(current_dir, languages):
 def hack_get_all_time_stats(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 
+	if hackathon.calculated:
+#		return HERE BC WE DON'T WANT ALL THIS WORK BELOW TO HAPPEN AGAIN
+
 	hack_q = Hack.select().where(Hack.hackathon=hackathon)
 	user_commits = {}
 	biggest = 0
@@ -184,5 +187,6 @@ def hack_get_all_time_stats(hackathon_id):
 
 	top3 = first + ", " + second + ", " + third
 
-	return {"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 }
-
+	hackathon.calculated = True
+	hackathon.stats = {"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 }
+	return #RENDER THE RIGHT TEMPLATE HERE
