@@ -3,8 +3,9 @@
 {% block use_nav %} {% endblock %}
 
 {% block content %}
+
 <div class="masthead">
-  <h2>{{ hackathon.title}}</h2>
+	<h2 class="dashboard-title" style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}"> {{ hackathon.title}} </a></h2>
 </div>
 <ul class="nav nav-tabs">
   <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
@@ -15,7 +16,12 @@
   <div id="tab-dashboard" class="active tab-pane">
 
     <h1 style="text-align: center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; color: #2FA4E7"><i>It's all over!</i></h1>
-
+    <blockquote style="text-align:center;">
+	<h4>{{ hackathon.description }}</h4>
+	<h5>Event happened at {{ hackathon.location }} </h5>
+	<h5><b>Began on</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }} <b>and finished on</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}! </h5>
+	<button class="btn"><a href="/">Go Back</a></button>
+    </blockquote>
     <h2>Stats</h2>
 
     <b>Total git commits:</b>{{ stats["max-number-commits"] }} <br />
