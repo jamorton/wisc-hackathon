@@ -15,11 +15,11 @@
     </form>
   </div>
   <div class="span6">
-    <h4>Set Trivia <small>(format: question, answer)</h4>
+    <h4>Set Trivia <small>(format: question | answer)</h4>
 
     <form action="" method="POST" id="trivia-form">
       <textarea name="questions" id="trivia-questions" style="width: 95%; height:125px;">{{ hackathon.trivia }}</textarea>
-      <button type="submit" name="submit" class="btn btn-primary">Set</button>
+      <button type="submit" name="submit" class="btn btn-primary">Set</button>&nbsp;&nbsp;&nbsp;&nbsp;<span id="set-trivia-success" style="font-weight: bold; color: green;"> </span>
     </form>
   </div>
 </div>
@@ -31,6 +31,7 @@
       $("#trivia-form button").hide();
       $.post("/ajax/set-questions", {"hackathon_id": "{{ hackathon.id }}", "questions": $("#trivia-questions").val()}, function(data) {
         $("#trivia-form button").show();
+        $("#set-trivia-success").text("Saved.");
       });
       return false;
     });

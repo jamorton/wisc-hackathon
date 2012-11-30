@@ -30,19 +30,27 @@
         </form>
       </div>
     </div>
-    <div id="slides">
-      <div class="slides_container">
-        {% for image in photos %}
-        <div> <img src="{{image.source}}" style="max-width:400px"/> </div>
-        {% endfor %}
-      </div>
-      <script type="text/javascript">
-	  	$("#slides").slides({
+
+    <div class="row">
+      <div id="slides" class="span6">
+        <h2>Pictures</h2>
+        <div class="slides_container">
+          {% for image in photos %}
+            <div><img src="{{image.source}}" style="max-width:400px"/></div>
+          {% endfor %}
+        </div>
+        <script type="text/javascript">
+	  	  $("#slides").slides({
 			preload: true,
 			play: 5000,
 			generatePagination: false
-      });
-	  </script> 
+          });
+	    </script>
+      </div>
+      <div class="span6">
+        <h2>Trivia</h2>
+
+      </div>
     </div>
   </div>
   <div id="tab-raffle" class="tab-pane">
@@ -53,6 +61,15 @@
     <div id="winner"> </div>
   </div>
 </div>
+
+<div style="text-align: center;">{{males}} males and {{females}} females</div>
+
+{% if hackathon.owner == user %}
+<div style="text-align: center;">
+  <a href="/hackathon/{{ hackathon.id }}/manage">Manage</a>
+</div>
+{% endif %}
+
 <script type="text/javascript">
   window.people = [];
   $(function() {
@@ -63,5 +80,5 @@
     shoutouts( {{ hackathon.id }} );
 
   });
-</script> 
-{% endblock %} 
+</script>
+{% endblock %}

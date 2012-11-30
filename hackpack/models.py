@@ -39,6 +39,7 @@ class Hackathon(BaseModel):
 	calculated = BooleanField(default=False)
 	stats = TextField(default="")
 	trivia = TextField(default="")
+	cur_question = TextField(default = "")
 
 class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
