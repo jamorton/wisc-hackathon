@@ -6,11 +6,11 @@ from auth import auth
 from wtfpeewee.orm import model_form
 from util import get_object_or_404
 import datetime
-
+import urllib, urllib2
 
 @app.route("/")
 @auth.login_required
-def dash_index():
+def index():
 	return render_template("index.html")
 
 @app.route("/hackathon/<int:hackathon_id>")
@@ -26,6 +26,7 @@ def dash(hackathon_id):
 		return render_template("dash-past.html", hackathon = hackathon)
 
 HackathonForm = model_form(Hackathon, exclude=("facebook_id", "owner"))
+HackForm = model_form(Hack, exclude=("hackathon",))
 
 @app.route("/hackathon/create", methods=["GET", "POST"])
 @auth.login_required
@@ -52,18 +53,20 @@ def hackathon_create():
 
 	return render_template("hackathon-create.html", form = form)
 
+@app.route("/hackathon/<int:hackathon_id>/addhack", methods=["GET", "POST"])
+def hack_create(hackathon_id):
 
+	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+	hack = Hack()
 
-
-
-"""
 	if request.method == "POST":
-		form = HackathonForm(request.form)
+		form = HackForm(request.form)
 		if form.validate():
-			form.save()
-
+			form.populate_obj(hack)
+			hack.hackathon = hackathon
+			hack.save()
+			return redirect(url_for("dash", hackathon.id))
 	else:
-		form = HackathForm()
+		form = HackForm()
 
-	return render_template("dash_index", form = form)
-"""
+	return render_template("hack-create.html", form = form, hackathon = hackathon)
