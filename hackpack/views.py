@@ -11,8 +11,6 @@ import urllib, urllib2
 @app.route("/")
 @auth.login_required
 def index():
-	pass
-"""
 	hackathon_q = Hackathon.select()
 
 	hackathons = []
@@ -34,7 +32,7 @@ def index():
 			})
 
 	return render_template("index.html", hackathons = hackathons)
-"""
+
 
 @app.route("/hackathon/<int:hackathon_id>")
 def dash(hackathon_id):
