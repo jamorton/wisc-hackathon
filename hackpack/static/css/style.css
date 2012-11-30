@@ -44,6 +44,12 @@
 ul.nav.nav-tabs {
   margin-bottom: 10px;
 }
+#timer{
+	font-size:60px;
+	text-align:center;
+    line-height: 60px;
+    padding-bottom: 10px;
+}
 
 footer {
   text-align: center;
