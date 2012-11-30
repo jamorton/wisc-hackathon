@@ -38,6 +38,7 @@ class Hackathon(BaseModel):
 	url_name = CharField(default = "")
 	calculated = BooleanField(default=False)
 	stats = TextField(default="")
+	trivia = TextField(default="")
 
 class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
