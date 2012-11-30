@@ -116,11 +116,9 @@ def walk(current_dir, languages):
 def hack_get_all_time_stats(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 
-	"""
 	if hackathon.calculated:
 		print hackathon.stats
 		return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)#RENDER THE RIGHT TEMPLATE HERE
-		"""
 
 	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 
@@ -153,7 +151,7 @@ def hack_get_all_time_stats(hackathon_id):
 			user_commits[committer] = user_commits[committer] + 1
 			if ( user_commits[committer] > biggest ):
 				top_committer = committer
-		
+
 		max_num_commits += len(commits)
 
 		os.system("git clone "+original)
