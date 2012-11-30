@@ -1,4 +1,4 @@
-trivia {
+trivia  = {
 'If the telephone company added one more digit to all the phone numbers in one area code, how many new phone numbers could potentially be add' : '90,000,000',
 'What is the most commonly used element in computers today?' : 'Halfium',
 'From the computer world: What does the word "modem" abbreviate?' : 'MODULATION AND DEMODULATION',
