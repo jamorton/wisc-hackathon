@@ -77,6 +77,24 @@ def ajax_create_hackathon():
 				print error
 		return {"status": "error", "error": "DERP"}
 
+@api_route("post-shoutout", requires_login=True)
+def ajax_post_shoutout():
+	hackathon = get_object_or_404(Hackathon, id = request.form["hackathon_id"])
+	so = Shoutout(user = auth.get_logged_in_user(), hackathon = hackathon, message = request.form["message"])
+	so.save()
+
+@api_route("updates", requires_login = True)
+def ajax_updates():
+	shoutouts_after = request.form["shoutouts_after"]
+	hackathon = get_object_or_404(Hackathon, id = request.form["hackathon_id"])
+	shoutouts = Shoutout.select().where(Shoutout.id > shoutouts_after, Shoutout.hackathon == hackathon).order_by(Shoutout.id)
+	out = []
+	for so in shoutouts:
+		out.append({"message": so.message, "fbid": so.user.facebook_id, "id": so.id})
+	last_id = shoutouts_after
+	if len(out):
+		last_id = out[-1]["id"]
+	return {"shoutouts": out, "last_id": last_id}
 
 @api_route("repo-stats", requires_login=True)
 def ajax_get_repo_stats():

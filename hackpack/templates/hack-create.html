@@ -1,8 +1,74 @@
 
 {% extends "base.html" %}
 
-{% from "_util.html" import render_form %}
-
 {% block content %}
-  {{ render_form("Submit Your Hack", form, "Submit") }}
+<div class="rows">
+<div class="span5">
+ <form method="post" action="">
+    <fieldset>
+      <h2>Submit Your Hack</h2>
+
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="title">Title</label> </label>
+          <input id="title" name="title" type="text" value="">
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="screenshot_url">Screenshot Url</label> </label>
+          <textarea id="screenshot_url" name="screenshot_url"></textarea>
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="github_repo">Github Repo</label> </label>
+          <textarea id="github_repo" name="github_repo"></textarea>
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="url">Url</label> </label>
+          <textarea id="url" name="url"></textarea>
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="description">Description</label> </label>
+          <textarea id="description" name="description"></textarea>
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="calculated">Calculated</label> </label>
+          <input id="calculated" name="calculated" type="checkbox" value="y">
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="stats">Stats</label> </label>
+          <textarea id="stats" name="stats"></textarea>
+        
+
+        </div>
+      
+
+      <button type="submit" class="btn">Submit</button>
+    </fieldset>
+  </form>
+</div>
+<div class="span6">
+<div id="addhack">
+<h2>Congrats!</h2>
+<img src="/static/img/addhack.jpg"></img>
+<h2>You are done! </h2>
+</div>
+</div>
+</div>
 {% endblock %}
