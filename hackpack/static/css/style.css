@@ -85,11 +85,12 @@ footer {
   margin-bottom: 5px;
 }
   .slides_container {
-                width:570px;
+	  			margin:auto;
+                width:400px;
                 height:270px;
             }
             .slides_container div {
-                width:570px;
+                width:400px;
                 height:270px;
                 display:block;
             }

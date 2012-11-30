@@ -212,12 +212,18 @@ def dash(hackathon_id):
 	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 	for h in hack_q:
 		hacks.append(h)
+		
 
 	if now < hackathon.start_date:
 		return render_template("dash-future.html", hackathon = hackathon)
 	elif now < hackathon.end_date:
+		req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/photos?access_token="+session["fb_token"])
+		response = urllib2.urlopen(req)
+		decoder = JSONDecoder()
+		photos = decoder.decode(response.read())
+		photos = photos["data"]
 		anns = Announcement.select().where(Announcement.hackathon == hackathon).order_by(Announcement.time)
-		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns)
+		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns, photos = photos)
 	else:
 		return hack_get_all_time_stats(hackathon, hacks)
 
