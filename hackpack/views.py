@@ -11,79 +11,6 @@ from json import JSONDecoder
 import json
 import os
 
-@app.route("/")
-@auth.login_required
-def index():
-	hackathon_q = Hackathon.select()
-
-	hackathons_now = []
-	hackathons_future = []
-	hackathon_query = []
-	now = datetime.datetime.now()
-	for h in hackathon_q:
-
-		if now < h.start_date:
-			hackathons_future.append(h)
-		elif now < h.end_date:
-			hackathons_now.append(h)
-		hackathon_query.append(h)
-
-	return render_template("index.html",
-						   hackathons_now = hackathons_now,
-						   hackathons_future = hackathons_future,
-						   hackathon_query = hackathon_query,
-						   active = "home")
-
-@app.route("/hackathon/<int:hackathon_id>/manage", methods=["GET", "POST"])
-def manage_hackathon(hackathon_id):
-	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
-
-	if request.method == "POST":
-		ann = Announcement(hackathon = hackathon, message = request.form["message"])
-		ann.save()
-		return redirect(url_for("dash", hackathon_id = hackathon.id))
-
-	return render_template("manage.html", hackathon = hackathon)
-
-@app.route("/hackathon/<int:hackathon_id>")
-def dash(hackathon_id):
-	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
-	now = datetime.datetime.now()
-
-	hacks = []
-
-	hack_q = Hack.select().where(Hack.hackathon==hackathon)
-	for h in hack_q:
-		hacks.append(h)
-
-	if now < hackathon.start_date:
-		return render_template("dash-future.html", hackathon = hackathon)
-	elif now < hackathon.end_date:
-		anns = Announcement.select().where(Announcement.hackathon == hackathon).order_by(Announcement.time)
-		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns)
-	else:
-		return render_template("dash-past.html", hackathon = hackathon, hacks = hacks)
-
-HackForm = model_form(Hack, exclude=("hackathon",))
-
-@app.route("/hackathon/<int:hackathon_id>/addhack", methods=["GET", "POST"])
-def hack_create(hackathon_id):
-	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
-	hack = Hack()
-
-	if request.method == "POST":
-		form = HackForm(request.form)
-		if form.validate():
-			form.populate_obj(hack)
-			hack.hackathon = hackathon
-			hack.save()
-			flash("Your hack was successfully added", "success")
-			return redirect(url_for("dash", hackathon_id = hackathon.id))
-	else:
-		form = HackForm()
-
-	return render_template("hack-create.html", form = form, hackathon = hackathon)
-
 def walk(current_dir, languages):
 	for root, dirs, files in os.walk(current_dir):
 		for dire in dirs:
@@ -135,13 +62,11 @@ def walk(current_dir, languages):
 				languages["objective-c"] = languages["objective-c"] + 1
 	return languages
 
-@app.route("/hackathon/<int:hackathon_id>/alltimestats")
-def hack_get_all_time_stats(hackathon_id):
-	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+def hack_get_all_time_stats(hackathon, hacks):
 
 	if hackathon.calculated:
 		print hackathon.stats
-		return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)#RENDER THE RIGHT TEMPLATE HERE
+		return render_template("dash-past.html", hackathon = hackathon, stats = JSONDecoder().decode(hackathon.stats), hacks = hacks)
 
 	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 
@@ -219,4 +144,78 @@ def hack_get_all_time_stats(hackathon_id):
 	hackathon.calculated = True
 	hackathon.stats = json.dumps({"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 })
 	hackathon.save()
-	return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)
+	return render_template("dash-past.html", hackathon = hackathon, stats = JSONDecoder().decode(hackathon.stats), hacks = hacks)
+
+
+@app.route("/")
+@auth.login_required
+def index():
+	hackathon_q = Hackathon.select()
+
+	hackathons_now = []
+	hackathons_future = []
+	hackathon_query = []
+	now = datetime.datetime.now()
+	for h in hackathon_q:
+
+		if now < h.start_date:
+			hackathons_future.append(h)
+		elif now < h.end_date:
+			hackathons_now.append(h)
+		hackathon_query.append(h)
+
+	return render_template("index.html",
+						   hackathons_now = hackathons_now,
+						   hackathons_future = hackathons_future,
+						   hackathon_query = hackathon_query,
+						   active = "home")
+
+@app.route("/hackathon/<int:hackathon_id>/manage", methods=["GET", "POST"])
+def manage_hackathon(hackathon_id):
+	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+
+	if request.method == "POST":
+		ann = Announcement(hackathon = hackathon, message = request.form["message"])
+		ann.save()
+		return redirect(url_for("dash", hackathon_id = hackathon.id))
+
+	return render_template("manage.html", hackathon = hackathon)
+
+@app.route("/hackathon/<int:hackathon_id>")
+def dash(hackathon_id):
+	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+	now = datetime.datetime.now()
+
+	hacks = []
+
+	hack_q = Hack.select().where(Hack.hackathon==hackathon)
+	for h in hack_q:
+		hacks.append(h)
+
+	if now < hackathon.start_date:
+		return render_template("dash-future.html", hackathon = hackathon)
+	elif now < hackathon.end_date:
+		anns = Announcement.select().where(Announcement.hackathon == hackathon).order_by(Announcement.time)
+		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns)
+	else:
+		return hack_get_all_time_stats(hackathon, hacks)
+
+HackForm = model_form(Hack, exclude=("hackathon",))
+
+@app.route("/hackathon/<int:hackathon_id>/addhack", methods=["GET", "POST"])
+def hack_create(hackathon_id):
+	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+	hack = Hack()
+
+	if request.method == "POST":
+		form = HackForm(request.form)
+		if form.validate():
+			form.populate_obj(hack)
+			hack.hackathon = hackathon
+			hack.save()
+			flash("Your hack was successfully added", "success")
+			return redirect(url_for("dash", hackathon_id = hackathon.id))
+	else:
+		form = HackForm()
+
+	return render_template("hack-create.html", form = form, hackathon = hackathon)

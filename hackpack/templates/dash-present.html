@@ -23,7 +23,7 @@
       <div class="span6">
         <h2>Announcements</h2>
         {% for ann in anns %}
-          <h4>{{ ann.time.strftime("%I:%m %p").replace("0:","!").replace("0", "").replace("!", "0:") }}: </h4>{{ ann.message }}
+          <h4>{{ ann.time.strftime("%I:%M %p") }}: </h4>{{ ann.message }}
         {%  endfor %}
       </div>
 
