@@ -2,7 +2,7 @@
 {% macro render_form(title, form, submit_text) -%}
   <form method="post" action="">
     <fieldset>
-      <legend>{{ title }}</legend>
+      <h2>{{ title }}</h2>
 
       {% for field in form %}
         <div class="control-group{% if field.errors %} error{% endif %}">
