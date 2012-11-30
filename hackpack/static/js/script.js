@@ -123,3 +123,17 @@ $(function () {
         return false;
     });
 });
+
+function autocomplete(hackathons,urls){
+        $( "#search" ).autocomplete({
+            source: hackathonTitle,
+   			 select: function( event, ui ) {
+				 		var str = (ui.item.value);
+						for (var i = 0; i<hackathonTitle.length; i++){
+							if (hackathonTitle[i] == str){
+								window.location = urls[i];
+							}
+						}
+				}
+        });	
+}
