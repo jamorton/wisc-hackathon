@@ -1,0 +1,8 @@
+
+{% extends "base.html" %}
+
+{% from "_util.html" import render_form %}
+
+{% block content %}
+  {{ render_form("Create a Hackathon", form, "Create") }}
+{% endblock %}
