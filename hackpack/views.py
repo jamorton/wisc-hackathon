@@ -37,12 +37,18 @@ def dash(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 	now = datetime.datetime.now()
 
+	hacks = []
+
+	hack_q = Hack.select().where(hackathon = hackathon)
+	for h in hack_q:
+		hacks.append(h)
+
 	if now < hackathon.start_date:
 		return render_template("dash-future.html", hackathon = hackathon)
 	elif now < hackathon.end_date:
-		return render_template("dash-present.html", hackathon = hackathon)
+		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks)
 	else:
-		return render_template("dash-past.html", hackathon = hackathon)
+		return render_template("dash-past.html", hackathon = hackathon, hacks = hacks)
 
 HackForm = model_form(Hack, exclude=("hackathon",))
 

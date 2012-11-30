@@ -35,6 +35,7 @@ class Hackathon(BaseModel):
 
 class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
+	description = TextField()
 	title = CharField()
 	screenshot_url = TextField(default="")
 	github_repo = TextField(default="")
