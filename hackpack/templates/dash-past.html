@@ -11,6 +11,31 @@
 </ul>
 <div class="tab-content">
   <div id="tab-dashboard" class="active tab-pane"> </div>
+  <div id="tab-presentation" class="tab-pane">
+    <div class="centered">
+      <div id="timer">2:00</div>
+    </div>
+    <div id="shufflebutton" class="centered">
+      <button class="btn-large btn btn-primary" onclick="countdown()" id="countdownbutton">Start Countdown</button>
+      <button class="btn-large btn btn-primary" onclick="supershuffle()">Shuffle Hacks</button>
+      <!--<button class="btn-large btn btn-primary" onclick="nexthack()">Next Hack</button>-->
+    </div>
+    <ul id="sortable" style="list-style-type: none; position:relative; margin:0px; padding:3px;">
+      {% for hack in hacks %}
+      <li class=" hack" style=" margin:4px;padding:4px; ">
+        <div class="small" style="font-size:20px;"><img src="{{hack.screenshot_url}}" width="100" height="100" style="padding-right:4px;"/><a href="{{hack.url}}"><strong>{{hack.title}}</strong></a></div>
+        <div class="big centered" style="display:none;">
+          <h2>{{hack.title}}</h2>
+          <h4>Website: <a href="{{hack.url}}">{{hack.url}}</a></h4>
+          <h4>Github URL: <a href="{{hack.github_repo}}">{{hack.github_repo}}</a></h4>
+          <h7>{{hack.description}}</h7><br />
+          <img src="{{hack.screenshot_url}}" width="500" height="500" style="padding-right:8px;"/>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+<div id="tab-addhack" class="tab-pane">
 <div class="rows">
 </div>
 </div>
@@ -18,6 +43,15 @@
 </div>
 <script type="text/javascript">
 var curpos = 1;
+$(".hack").click(function() {
+  showme($(this));
+});
+ $('.hack').hover( function(){
+      $(this).css('background-color', '#FFC');
+   },
+   function(){
+      $(this).css('background-color', '#FFF');
+   });
 function nexthack(){
 	curpos++;
 	var count = $("ul li.hack").length;
@@ -25,6 +59,12 @@ function nexthack(){
 		curpos = 1;
 	}
 	numshow(curpos);
+}
+function showme(t){		
+	$(".small").show();
+	$(".big").hide();
+	t.find(".small").hide();
+	t.find(".big").show();
 }
 function numshow(i){
 $(".small").show();
