@@ -12,12 +12,13 @@ def dash_past():
 	return render_template("dash-past.html")
 
 @app.route("/dash-present")
-def dash_past():
+def dash_present():
 	return render_template("dash-present.html")
 
 @app.route("/dash-future")
-def dash_past():
+def dash_future():
 	return render_template("dash-future.html")
+
 
 
 """
