@@ -10,7 +10,7 @@ from wtfpeewee.orm import model_form
 import urllib, urllib2
 from json import JSONDecoder
 import datetime
-#from trivia import trivia
+from trivia import trivia_info
 
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
