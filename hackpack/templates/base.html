@@ -22,6 +22,44 @@
   </head>
   <body>
 
+	<div class="modal hide fade" id="create-hackathon">
+	  <div class="modal-header">
+		<a href="#" class="close" data-dismiss="modal">&times;</a>
+		<h3>Create a hackathon</h3>
+	  </div>
+	  <div class="modal-body">
+        <form action="" method="POST" id="create-hackathon-form">
+          <div class="divDialogElements">
+		  <label class="control-label"><label for="title">Title</label></label>
+		  <input class="xlarge" id="xlInput" name="title" type="text" value=""/>
+		  <label class="control-label"><label for="Description">Description</label></label>
+		  <textarea class="xlarge" id="xlInput" name="title" type="text" value=""></textarea>
+          <label class="control-label"> <label for="start_date">Start Date</label> </label>
+          <input class="date-widget  datetime-widget" id="start_date_date" name="start_date-date" type="text" value="2012-11-29">
+	      <input class="time-widget  datetime-widget" id="start_date_time" name="start_date-time" type="text" value="22:47:57">
+          <label class="control-label"> <label for="end_date">End Date</label> </label>
+          <input class="date-widget  datetime-widget" id="end_date_date" name="end_date-date" type="text" value="2012-11-29">
+	      <input class="time-widget  datetime-widget" id="end_date_time" name="end_date-time" type="text" value="22:47:57">
+          <label class="control-label"> <label for="location">Location</label> </label>
+          <input id="url_name" name="url_name" type="text" value="">
+		</div>
+        </form>
+	  </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" onclick="closeDialog ();">Cancel</a>
+        <a href="#" class="btn btn-success" onclick="okClicked ();">Create</a>
+      </div>
+    </div>
+
+	<script>
+      $('#start_date_date').datetimepicker({
+		altField: "#start_date_time"
+	  });
+	  $('#end_date_date').datetimepicker({
+	    altField: "#end_date_time"
+	  });
+	</script>
+
     <div class="container narrow">
 
 {% block use_nav %}
@@ -31,44 +69,7 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li{% if active == "home" %} class="active"{% endif %}><a href="/">Home</a></li>
-	<div class="modal hide fade" id="windowTitleDialog">
-		<div class="modal-header">
-			<a href="#" class="close" data-dismiss="modal">&times;</a>
-			<h3>Create a hackathon</h3>
-			</div>
-		<div class="modal-body">
-			<div class="divDialogElements">
-			<label class="control-label"><label for="title">Title</label></label>
-			<input class="xlarge" id="xlInput" name="title" type="text" value=""/>
-			<label class="control-label"><label for="Description">Description</label></label>
-			<textarea class="xlarge" id="xlInput" name="title" type="text" value=""></textarea>
-          <label class="control-label"> <label for="start_date">Start Date</label> </label>
-          <input class="date-widget  datetime-widget" id="start_date_date" name="start_date-date" type="text" value="2012-11-29">
-	  <input class="time-widget  datetime-widget" id="start_date_time" name="start_date-time" type="text" value="22:47:57">
-          <label class="control-label"> <label for="end_date">End Date</label> </label>
-          <input class="date-widget  datetime-widget" id="end_date_date" name="end_date-date" type="text" value="2012-11-29">
-	  <input class="time-widget  datetime-widget" id="end_date_time" name="end_date-time" type="text" value="22:47:57">
-          <label class="control-label"> <label for="location">Location</label> </label>
-          <input id="url_name" name="url_name" type="text" value="">
-				</div>
-			</div>
-	<script>
-	$('#start_date_date').datetimepicker({
-		altField: "#start_date_time"
-
-	});
-	$('#end_date_date').datetimepicker({
-		altField: "#end_date_time"
-	});
-	</script>
-		<div class="modal-footer">
-			<a href="#" class="btn" onclick="closeDialog ();">Cancel</a>
-			<a href="#" class="btn btn-success" onclick="okClicked ();">Create</a>
-			</div>
-		</div>
-      <li{% if active == "create" %} class="active"{% endif %}>
-	<a data-toggle="modal" href="#windowTitleDialog">Create Event</a>
-	</li>
+          <li{% if active == "create" %} class="active"{% endif %}><a data-toggle="modal" href="#create-hackathon">Create Event</a></li>
         </ul>
         <form class="navbar-search pull-left" action="">
           <input type="text" class="search-query span2" placeholder="Find a Hackathon">
