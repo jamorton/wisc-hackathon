@@ -38,35 +38,35 @@
   <h2 style="text-align: center;">Current Hackathons</h2>
   <div>
     {% for hackathon in hackathons_now %}
-      <p>
-        <h3><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a> <small>{{ hackathon.location }}</small></h3>
-        <div>{{ hackathon.description }}</div>
-        <small>
-            Begins: <i>{{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }}</i><br />
-            Ends: <i>{{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}</i>
-        </small>
-      </p>
+        <h3 style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a> <small>{{ hackathon.location }}</small></h3>
+        <blockquote>
+            <div><b>Begins:</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }}</div>
+            <b>Ends:</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}
+        </blockquote>
     {% endfor %}
   </div>
 {% endif %}
+
   </div>
   <div class="span6">
 
 {% if hackathons_future %}
+
   <h2 style="text-align: center;">Future Hackathons</h2>
   <div>
     {% for hackathon in hackathons_future %}
-      <div class="hackathon-item">
-	    <h3><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a></h3>
-        {{ hackathon.description }}. AT: {{ hackathon.location }}
-        <p>FROM: {{ hackathon.start_date }} TO: {{ hackathon.end_date }} </p>
-      </div>
+        <h3 style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a> <small>{{ hackathon.location }}</small></h3>
+        <blockquote>
+            <div><b>Begins:</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }}</div>
+            <b>Ends:</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}
+        </blockquote>
     {% endfor %}
   </div>
 {% endif %}
 
   </div>
 </div>
+
 
 <!-- /Create and event list -->
 
