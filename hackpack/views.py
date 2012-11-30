@@ -118,7 +118,7 @@ def hack_get_all_time_stats(hackathon_id):
 	if hackathon.calculated:
 #		return HERE BC WE DON'T WANT ALL THIS WORK BELOW TO HAPPEN AGAIN
 
-	hack_q = Hack.select().where(Hack.hackathon=hackathon)
+	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 	user_commits = {}
 	biggest = 0
 	top_committer = ""
