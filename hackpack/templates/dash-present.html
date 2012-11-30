@@ -24,7 +24,15 @@
     <div id="winner">
     </div>
   </div>
-  <div id="tab-presentation" class="tab-pane"> </div>
+  <div id="tab-presentation" class="tab-pane"> 
+  {% for hack in hacks %}
+	<pre>
+	<a href={{hack.url}}>{{hack.title}}</a>
+	<img src="https://devimages.apple.com.edgekey.net/wwdc/images/wwdc2012-june-11-15.jpg" height="300px" width="200px"></img>
+	</pre>
+ {% endfor %} 
+
+  </div>
 </div>
 <script type="text/javascript">
   window.people = [];
