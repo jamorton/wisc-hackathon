@@ -42,8 +42,7 @@ def ajax_get_event_attendees():
 
 @api_route("repo-stats", requires_login=True)
 def ajax_get_repo_stats():
-#	repo_address = request.form["repo_address"]
-	repo_address = "https://github.com/Jonanin/wisc-hackathon.git"
+	repo_address = request.form["repo_address"]
 	repo_address = repo_address.replace("https://", "").replace("http://", "").replace("git@github.com:", "").replace("github.com/", "").replace(".git", "")
 	repo_owner = repo_address.split("/")[0]
 	repo_name = repo_address.split("/")[1]
