@@ -8,6 +8,7 @@
       type="image/png"
       href="../static/img/favicon.png">
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/modal.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css" />
 <link href="http://code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css" type="text/css" media="all" rel="stylesheet">
@@ -17,6 +18,7 @@
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <script src="/static/js/jquery-ui-timepicker-addon.js"></script>
     <script src="/static/js/jquery-ui-sliderAccess.js"></script>
+    <script src="/static/js/modal.js"></script>
   </head>
   <body>
 
@@ -28,7 +30,44 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li{% if active == "home" %} class="active"{% endif %}><a href="/">Home</a></li>
-          <li{% if active == "create" %} class="active"{% endif %}><a href="/hackathon/create">Create Event</a></li>
+	<div class="modal hide fade" id="windowTitleDialog">
+		<div class="modal-header">
+			<a href="#" class="close" data-dismiss="modal">&times;</a>
+			<h2>Create a hackathon</h2>
+			</div>
+		<div class="modal-body">
+			<div class="divDialogElements">
+			<label class="control-label"><label for="title">Title</label></label>
+			<input class="xlarge" id="xlInput" name="title" type="text" value=""/>
+			<label class="control-label"><label for="Description">Description</label></label>
+			<textarea class="xlarge" id="xlInput" name="title" type="text" value=""></textarea>
+          <label class="control-label"> <label for="start_date">Start Date</label> </label>
+          <input class="date-widget  datetime-widget" id="start_date_date" name="start_date-date" type="text" value="2012-11-29">
+	  <input class="time-widget  datetime-widget" id="start_date_time" name="start_date-time" type="text" value="22:47:57">
+          <label class="control-label"> <label for="end_date">End Date</label> </label>
+          <input class="date-widget  datetime-widget" id="end_date_date" name="end_date-date" type="text" value="2012-11-29">
+	  <input class="time-widget  datetime-widget" id="end_date_time" name="end_date-time" type="text" value="22:47:57">
+          <label class="control-label"> <label for="location">Location</label> </label>
+          <input id="url_name" name="url_name" type="text" value="">
+				</div>
+			</div>
+	<script>
+	$('#start_date_date').datetimepicker({
+		altField: "#start_date_time"
+
+	});
+	$('#end_date_date').datetimepicker({
+		altField: "#end_date_time"
+	});
+	</script>
+		<div class="modal-footer">
+			<a href="#" class="btn" onclick="closeDialog ();">Cancel</a>
+			<a href="#" class="btn btn-success" onclick="okClicked ();">Create</a>
+			</div>
+		</div>
+      <li{% if active == "create" %} class="active"{% endif %}>
+	<a data-toggle="modal" href="#windowTitleDialog">Create Event</a>
+	</li>
         </ul>
         <form class="navbar-search pull-left" action="">
           <input type="text" class="search-query span2" placeholder="Find a Hackathon">
