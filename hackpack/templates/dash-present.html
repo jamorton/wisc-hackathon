@@ -3,9 +3,7 @@
 {% block use_nav %} {% endblock %}
 
 {% block content %}
-
 <div class="dashboard-title">{{ hackathon.title }}</div>
-
 <ul class="nav nav-tabs">
   <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
   <li class="tab"><a href="#tab-raffle" data-toggle="tab">Raffle</a></li>
@@ -15,53 +13,46 @@
     <div class="timer">
       <div id="clock">&nbsp;</div>
     </div>
-    <div class="song">
-      <i>Carly Rae Jepsen - &ldquo;Call Me Maybe&rdquo;</i>
-    </div>
-
+    <div class="song"> <i>Carly Rae Jepsen - &ldquo;Call Me Maybe&rdquo;</i> </div>
     <div class="row">
-    <div id="myCarousel" class="carousel slide">
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="/static/img/carousel.png" alt="">
-    </div>
-    <div class="item">
-      <img src="/static/img/carousel2.png" alt="">
-    </div>
-    <div class="item">
-      <img src="/static/img/carousel3.png" alt="">
-    </div>
-  </div>
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
-    </div>
-    <div class="row">
-      <div class="span6">
-        <h2>Announcements</h2>
-      </div>
-
-      <div class="span6">
-        <h2>Shoutouts</h2>
-        <div id="shoutout-area" class="well">
+      <div id="slides">
+        <div class="slides_container">
+          <div> <img src="http://placehold.it/530x270"> </div>
+          <div> <img src="http://placehold.it/570x270"> </div>
+          <div> <img src="http://placehold.it/510x270"> </div>
+          <div> <img src="http://placehold.it/570x270"> </div>
         </div>
-        <form id="shoutout-form">
-          <input type="text" placeholder="Shoutout..." name="shoutout-message" id="shoutout-message" />
-        </form>
       </div>
-    </div>
-
-  </div>
-  <div id="tab-raffle" class="tab-pane">
-    <div id="rafflebutton" class="centered">
-      <button class="btn-large btn btn-primary" onclick="setupRaffle({{hackathon.id}})">New Raffle</button>
-    </div>
-    <div id="faces">
-    </div>
-    <div id="winner">
+      <script type="text/javascript">
+	  	$("#slides").slides({
+			preload: true,
+			play: 5000,
+			generatePagination: false
+      });
+	  </script>
     </div>
   </div>
- </div>
+  <div class="row">
+    <div class="span6">
+      <h2>Announcements</h2>
+    </div>
+    <div class="span6">
+      <h2>Shoutouts</h2>
+      <div id="shoutout-area" class="well"> </div>
+      <form id="shoutout-form">
+        <input type="text" placeholder="Shoutout..." name="shoutout-message" id="shoutout-message" />
+      </form>
+    </div>
+  </div>
+</div>
+<div id="tab-raffle" class="tab-pane">
+  <div id="rafflebutton" class="centered">
+    <button class="btn-large btn btn-primary" onclick="setupRaffle({{hackathon.id}})">New Raffle</button>
+  </div>
+  <div id="faces"> </div>
+  <div id="winner"> </div>
+</div>
+</div>
 <script type="text/javascript">
   window.people = [];
   $(function() {
@@ -72,5 +63,5 @@
     shoutouts( {{ hackathon.id }} );
 
   });
-</script>
-{% endblock %}
+</script> 
+{% endblock %} 
