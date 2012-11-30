@@ -5,7 +5,7 @@ from peewee import *
 
 from app import db
 
-__all__ = ["Hackathon", "User", "Team", "Membership", "create_tables"]
+__all__ = ["Hackathon", "User", "Hack", "create_tables"]
 
 class BaseModel(db.Model):
 	pass
@@ -31,16 +31,16 @@ class Hackathon(BaseModel):
 	location = CharField()
 	facebook_id = IntegerField(default = 0)
 	owner = ForeignKeyField(User)
+	url_name = CharField()
 
-class Team(BaseModel):
+class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
-
-class Membership(BaseModel):
-	user = ForeignKeyField(User)
-	team = ForeignKeyField(Team)
+	title = CharField()
+	screenshot_url = TextField(default="")
+	github_repo = TextField(default="")
+	url = TextField()
 
 def create_tables():
 	Hackathon.create_table()
 	User.create_table()
-	Team.create_table()
-	Membership.create_table()
+	Hack.create_table()
