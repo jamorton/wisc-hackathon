@@ -116,10 +116,10 @@ def hack_get_all_time_stats(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 
 	if hackathon.calculated:
-		return render_template("hackathon/"+hackathon.id, hackathon_id = hackathon.id)
-#		return HERE BC WE DON'T WANT ALL THIS WORK BELOW TO HAPPEN AGAIN
-
+		return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)#RENDER THE RIGHT TEMPLATE HERE
+	
 	hack_q = Hack.select().where(Hack.hackathon==hackathon)
+
 	user_commits = {}
 	biggest = 0
 	top_committer = ""
@@ -190,4 +190,4 @@ def hack_get_all_time_stats(hackathon_id):
 
 	hackathon.calculated = True
 	hackathon.stats = {"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 }
-	return render_template("hackathon/"+hackathon.id, hackathon_id=hackathon.id)#RENDER THE RIGHT TEMPLATE HERE
+	return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)
