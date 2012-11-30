@@ -5,7 +5,8 @@ from models import *
 from auth import auth
 import functools, urllib2
 from json import JSONDecoder
-"""
+from util import get_object_or_404
+
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
 	def decorator(fn):
@@ -31,14 +32,15 @@ def ajax_login():
 
 @api_route("attendees", requires_login=True)
 def ajax_get_event_attendees():
-	hackathon_id = request.form["hackathon_id"]
-	req = urllib2.Request("https://graph.facebook.com/"+hackathon_id+"/attending?access_token="+session["fb_token"])
+	hackathon = get_object_or_404(Hackathon, id = request.form["hackathon_id"])
+	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/attending?access_token="+session["fb_token"])
+	print "https://graph.facebook.com/"+str(hackathon.facebook_id)+"/attending?access_token="+session["fb_token"]
 	response = urllib2.urlopen(req)
 	decoder = JSONDecoder()
 	attending = decoder.decode(response.read())["data"]
-	return attending
+	return {"attending": attending}
 
-@api_route("repo-stats", requires_login=True)"""
+@api_route("repo-stats", requires_login=True)
 def ajax_get_repo_stats():
 #	repo_address = request.form["repo_address"]
 	repo_address = "https://github.com/Jonanin/wisc-hackathon.git"
@@ -51,5 +53,4 @@ def ajax_get_repo_stats():
 	commits = decoder.decode(response.read())
 	return {"commit-number" : len(commits)}
 
-print ajax_get_repo_stats()
-
+#@api_route("create-hackathon", requires

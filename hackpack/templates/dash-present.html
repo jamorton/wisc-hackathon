@@ -1,47 +1,37 @@
  {% extends "base.html" %}
 
-{% block content %} 
+{% block use_nav %} {% endblock %}
+
+{% block content %}
 <!-- Add a way to hide Raffle and Presentations if the user isn't admin -->
-<div id="tabs">
-  <ul class="nav nav-tabs">
-    <li class="active tab"><a href="#tabs-1">Dashboard</a> </li>
-    <li class=" tab"><a href="#tabs-2">Raffle</a></li>
-    <li class=" tab"><a href="#tabs-3">Presentations</a></li>
-  </ul>
-  <div id="tabs-1" class="active">
-    <div class="row-fluid">
-      <div class="span2">...</div>
-      <div class="span8">
-        <div class="well">
-          <div id="clock"></div>
-        </div>
-      </div>
-      <div class="span2">...</div>
+<ul class="nav nav-tabs">
+  <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
+  <li class="tab"><a href="#tab-raffle" data-toggle="tab">Raffle</a></li>
+  <li class="tab"><a href="#tab-presentation" data-toggle="tab">Presentations</a></li>
+</ul>
+<div class="tab-content">
+  <div id="tab-dashboard" class="active tab-pane">
+    <div class="timer">
+      <div id="clock">&nbsp;</div>
     </div>
   </div>
-  <div id="tabs-2">
-  <div id="rafflebutton" class="centered">
-  <button class="btn-large" onclick="setupRaffle(people)">New Raffle</button>
+  <div id="tab-raffle" class="tab-pane">
+    <div id="rafflebutton" class="centered">
+      <button class="btn-large btn btn-primary" onclick="setupRaffle({{hackathon.id}})">New Raffle</button>
+    </div>
+    <div id="faces">
+    </div>
+    <div id="winner">
+    </div>
   </div>
-  <div id="faces">
-  </div>
-  <div id="winner">
-  </div>
-  </div>
-  <div id="tabs-3"> </div>
+  <div id="tab-presentation" class="tab-pane"> </div>
 </div>
 <script type="text/javascript">
-	var secondsremaining = 1000;
+  window.people = [];
+  $(function() {
+    var endDate = new Date("{{ hackathon.end_date }}");
+	var secondsremaining = (endDate.getTime() - (new Date()).getTime())/1000;
 	clock(secondsremaining);
-	dashboard();
-	var people = [
-        {"name": "Lucas", "picture": "http://profile.ak.fbcdn.net/hprofile-ak-snc6/273612_654740826_1890414021_q.jpg"},
-        {"name": "Jon", "picture": "http://profile-b.xx.fbcdn.net/hprofile-ash4/371871_508438062_832266399_q.jpg"},
-        {"name": "Lucas", "picture": "http://profile.ak.fbcdn.net/hprofile-ak-snc6/273612_654740826_1890414021_q.jpg"},
-        {"name": "Jon", "picture": "http://profile-b.xx.fbcdn.net/hprofile-ash4/371871_508438062_832266399_q.jpg"}
-    ];
-	for (var i = 0; i < 100; i++){
-	people.push({"name": i, "picture": "http://profile-b.xx.fbcdn.net/hprofile-ash4/371871_508438062_832266399_q.jpg"});
-	}
-</script> 
-{% endblock %} 
+  });
+</script>
+{% endblock %}

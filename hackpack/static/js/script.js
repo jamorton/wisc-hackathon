@@ -22,14 +22,6 @@ function updateClock(){
 	}
 }
 
-function dashboard(){
-	$("#tabs").tabs();	
-	$(".tab").click(function() {
-		$(".tab").removeClass("active");
-	 	$(this).addClass("active");
-	});
-}
-
 function loginResponse(response) {
     if (response.status == "connected") {
         $.post("/ajax/login",
@@ -63,25 +55,35 @@ function runRaffle(){
 	}
 }
 
-function setupRaffle(data){
-	var json = $.parseJSON(data);
-	$("#faces").empty();
-	$("#winner").empty();
-	clearInterval(raffleInterval);
-	faces = new Array();
-	names = new Array();
-	var i = 0;
-	var x = Math.floor(Math.sqrt(500*1000/data.length));
-	x-=2;//for padding
-		console.log(json);
-	$.each(data, function() {
-		console.log("test");
-		$("#faces").append("<div class='pull-left' style='margin:1px; width:"+x+"px; height:"+x+"px;'><div class='face' id='face"+i+"'><img src='"+this.picture+"'  width='"+x+"'  height='"+x+"'></img></div></div></div>");
-		names[i] = [this.name,this.picture];
-		faces[i] = $("#face"+i);
-		i++;
+function setupRaffle(hid) {
+    var people = [];
+    $.post("/ajax/attendees", {"hackathon_id": hid}, function (data) {
+        for (var i = 0; i < data.attending.length; i++) {
+            var person = data.attending[i];
+            var p = {
+                name: person.name,
+                picture: "http://graph.facebook.com/" + String(person.id) + "/picture?type=large"
+            };
+            people.push(p);
+        }
+        console.log(people);
+	    $("#faces").empty();
+	    $("#winner").empty();
+	    clearInterval(raffleInterval);
+	    faces = new Array();
+	    names = new Array();
+	    var i = 0;
+	    var x = Math.floor(Math.sqrt(500*1000/people.length));
+	    x-=2;//for padding
+	    $.each(people, function() {
+		    console.log("test");
+		    $("#faces").append("<div class='pull-left' style='margin:1px; width:"+x+"px; height:"+x+"px;'><div class='face' id='face"+i+"'><img src='"+this.picture+"' style='width: "+x+"px; height: "+x+"px;' /></div></div></div>");
+		    names[i] = [this.name,this.picture];
+		    faces[i] = $("#face"+i);
+		    i++;
+        });
+	    raffleInterval = setInterval('runRaffle()', 2000);
     });
-	raffleInterval = setInterval('runRaffle()', 2000);
 }
 
 function fbLogin() {
@@ -107,3 +109,11 @@ window.fbAsyncInit = function() {
     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
     ref.parentNode.insertBefore(js, ref);
 }(document, true));
+
+$(function () {
+    $("#create-hackathon-form").submit(function() {
+        $.post("/ajax/create-hackathon", $(this).serialize(), function(data) {
+
+        });
+    });
+});
