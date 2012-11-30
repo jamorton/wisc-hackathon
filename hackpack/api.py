@@ -5,7 +5,7 @@ from models import *
 from auth import auth
 import functools, urllib2
 from json import JSONDecoder
-
+"""
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
 	def decorator(fn):
@@ -37,4 +37,19 @@ def ajax_get_event_attendees():
 	decoder = JSONDecoder()
 	attending = decoder.decode(response.read())["data"]
 	return attending
+
+@api_route("repo-stats", requires_login=True)"""
+def ajax_get_repo_stats():
+#	repo_address = request.form["repo_address"]
+	repo_address = "https://github.com/Jonanin/wisc-hackathon.git"
+	repo_address = repo_address.replace("https://", "").replace("http://", "").replace("git@github.com:", "").replace("github.com/", "").replace(".git", "")
+	repo_owner = repo_address.split("/")[0]
+	repo_name = repo_address.split("/")[1]
+	req = urllib2.Request("https://api.github.com/repos/"+repo_owner+"/"+repo_name+"/commits?per_page=10000")
+	response = urllib2.urlopen(req)
+	decoder = JSONDecoder()
+	commits = decoder.decode(response.read())
+	return {"commit-number" : len(commits)}
+
+print ajax_get_repo_stats()
 
