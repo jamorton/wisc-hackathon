@@ -10,11 +10,6 @@ __all__ = ["Hackathon", "User", "Team", "Membership", "create_tables"]
 class BaseModel(db.Model):
 	pass
 
-class Hackathon(BaseModel):
-	title = CharField()
-	date = DateTimeField(default = datetime.datetime)
-	facebook_id = IntegerField()
-
 class User(BaseModel):
 	facebook_id = IntegerField(unique = True)
 	active = BooleanField(default = True)
@@ -27,6 +22,15 @@ class User(BaseModel):
 			u = User(facebook_id = fbid)
 			u.save()
 		return u
+
+class Hackathon(BaseModel):
+	title = CharField()
+	description = TextField()
+	start_date = DateTimeField(default = datetime.datetime.now)
+	end_date = DateTimeField(default = datetime.datetime.now)
+	location = CharField()
+	facebook_id = IntegerField(default = 0)
+	owner = ForeignKeyField(User)
 
 class Team(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)

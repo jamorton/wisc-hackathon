@@ -6,6 +6,7 @@
 <a href="#" id="login-button" class="btn btn-large btn-primary">Login with Facebook</a>
 
 <script type="text/javascript">
+  window.REDIRECT_URL = "{{ redirect_url }}";
   $(function() {
     $("#login-button").click(function() {
       FB.login(loginResponse);

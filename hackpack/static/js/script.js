@@ -5,7 +5,7 @@ function loginResponse(response) {
         $.post("/ajax/login",
                {"token": response.authResponse.accessToken, "fbid": response.authResponse.userID},
                function (data) {
-                   window.location = "/";
+                   window.location = window.REDIRECT_URL;
                });
     }
 }

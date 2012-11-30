@@ -1,8 +1,9 @@
 
 from app import app
 from models import *
-from flask import render_template
+from flask import render_template, request
 from auth import auth
+from wtfpeewee.orm import model_form
 
 @app.route("/")
 @auth.login_required
@@ -21,10 +22,28 @@ def dash_present():
 def dash_future():
 	return render_template("dash-future.html")
 
-"""
-@app.route("/hackathon/create")
-def hackathon_Create():
-"""
+
+
+HackathonForm = model_form(Hackathon, exclude=("facebook_id", "owner"))
+
+@app.route("/hackathon/create", methods=["GET", "POST"])
+@auth.login_required
+def hackathon_create():
+	hack = Hackathon()
+
+	if request.method == "POST":
+		form = HackathonForm(request.form)
+		if form.validate():
+			form.populate_obj(hack)
+			hack.owner = auth.get_logged_in_user()
+			hack.save()
+	else:
+		form = HackathonForm()
+
+	return render_template("hackathon-create.html", form = form)
+
+
+
 
 
 """
