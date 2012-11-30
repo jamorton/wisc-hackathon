@@ -20,19 +20,12 @@ def index():
 	now = datetime.datetime.now()
 	for h in hackathon_q:
 
-		end_date = "NONE"
-		if ( h.end_date != "" ):
-			end_date = h.end_date
-		location = "NONE"
-		if ( h.location != "" ):
-			location = h.location
-
 		hd = {
 			'title' : h.title,
 			'description' : h.description,
 			'start_time' : h.start_date,
-			'end_time' : end_date,
-			'location' : location
+			'end_time' : h.end_date,
+			'location' : h.location
 		}
 
 		if now < h.start_date:
@@ -51,14 +44,10 @@ def dash(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 	now = datetime.datetime.now()
 
-	print "access_token = ", session["fb_token"]
-
 	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/attending?access_token="+session["fb_token"])
 	response = urllib2.urlopen(req)
 	decoder = JSONDecoder()
 	attending = decoder.decode(response.read())["data"]
-
-	print "returned", attending
 
 	if now < hackathon.start_date:
 		return render_template("dash-future.html", hackathon = hackathon, attending = attending)
