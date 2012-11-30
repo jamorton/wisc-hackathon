@@ -5,8 +5,7 @@ from flask import render_template, request, url_for, redirect
 from auth import auth
 from wtfpeewee.orm import model_form
 from util import get_object_or_404
-import datetime
-
+import datetime, urllib, urllib2
 
 @app.route("/")
 @auth.login_required
@@ -37,7 +36,7 @@ def hackathon_create():
 		if form.validate():
 			form.populate_obj(hack)
 			hack.owner = auth.get_logged_in_user()
-			data = urllib.encode({
+			data = urllib.urlencode({
 				'name' : hack.title,
 				'start_time' : hack.start_time,
 				'end_time' : hack.end_time,
