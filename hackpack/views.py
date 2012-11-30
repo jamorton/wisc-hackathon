@@ -68,7 +68,6 @@ def hackathon_create():
 			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
 			response = urllib2.urlopen(req)
 			event_id = response.read()
-			print event_id
 			event_id = event_id.replace("{\"id\":\"", "")
 			event_id = event_id.replace("\"}", "")
 			hack.facebook_id = int(event_id)
