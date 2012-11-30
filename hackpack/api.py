@@ -70,7 +70,7 @@ def ajax_create_hackathon():
 		hack.facebook_id = decoder.decode(response.read())["id"]
 		trivia_str = ""
 		for question in trivia_info:
-			trivia_str += question + ":" + trivia_info[question]
+			trivia_str += question + "|" + trivia_info[question]
 
 		hack.trivia = trivia_str
 
