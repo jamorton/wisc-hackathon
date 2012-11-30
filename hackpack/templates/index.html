@@ -2,6 +2,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<<<<<<< HEAD
     <form class="form-search">
     <input type="text" class="input-medium search-query">
     <button type="submit" class="btn">Search for hackathons</button>
@@ -30,6 +31,19 @@
 </div>
 <div class="span5">
 <a class="btn btn-primary btn-large">Create Event</a>
+
+    <ul class="nav nav-pills nav-stacked">
+
+	    {% for hackathon in hackathons %}
+	    <li>
+	    	<a href="#">
+			<h2>{{ hackathon.title }}  </h2>
+			{{ hackathon.description }}. AT: "font-weight:bold;">{{ hackathon.location }}
+			<p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
+		</a>
+	    </li>
+	    {% endfor %}
+    </ul>
 <h3>Current</h3>
 <ol>
 <li>Hackathon 1</li>
@@ -40,6 +54,5 @@
 </div>
 
 <!-- /Create and event list -->
-
 
 {% endblock %}

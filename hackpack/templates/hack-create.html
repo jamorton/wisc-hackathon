@@ -1,0 +1,8 @@
+
+{% extends "base.html" %}
+
+{% from "_util.html" import render_form %}
+
+{% block content %}
+  {{ render_form("Submit Your Hack", form, "Submit") }}
+{% endblock %}
