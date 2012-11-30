@@ -20,18 +20,12 @@ def index():
 	now = datetime.datetime.now()
 	for h in hackathon_q:
 
-		hd = {
-			'title' : h.title,
-			'description' : h.description,
-			'start_time' : h.start_date,
-			'end_time' : h.end_date,
-			'location' : h.location
-		}
+		print "existing hackathons", h.start_date, " and ", h.end_date
 
 		if now < h.start_date:
-			hackathons_future.append(hd)
+			hackathons_future.append(h)
 		elif now < h.end_date:
-			hackathons_now.append(hd)
+			hackathons_now.append(h)
 
 	return render_template("index.html",
 						   hackathons_now = hackathons_now,
@@ -76,6 +70,7 @@ def hackathon_create():
 				'end_time' : datetime.date.isoformat(hack.end_date),
 				'description' : hack.description,
 				'location' : hack.location})
+			print "data is " , data
 			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
 			response = urllib2.urlopen(req)
 			decoder = JSONDecoder()

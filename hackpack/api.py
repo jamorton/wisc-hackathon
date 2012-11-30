@@ -29,11 +29,9 @@ def ajax_login():
 	auth.login_user(user)
 	session["fb_token"] = request.form["token"]
 
-@api_route("attendees")
+@api_route("attendees", requires_login=True)
 def ajax_get_event_attendees():
-	fbid = request.form["fbid"]
 	hackathon_id = request.form["hackathon_id"]
-
 	req = urllib2.Request("https://graph.facebook.com/"+hackathon_id+"/attending?access_token="+session["fb_token"])
 	response = urllib2.urlopen(req)
 	decoder = JSONDecoder()
