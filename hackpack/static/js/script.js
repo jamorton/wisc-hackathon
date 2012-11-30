@@ -137,3 +137,37 @@ function autocomplete(hackathons,urls){
 				}
         });	
 }
+function tick(){
+	seconds--;
+	console.log(seconds);
+	var secondstext = seconds%60+"";
+	if (secondstext.length == 1){
+		secondstext = "0" + secondstext;
+	}
+	$('#timer').html(Math.floor(seconds/60)+":"+secondstext);
+	if (seconds == 0){
+		alert("Time's up!");
+		resetTimer();
+	}
+}
+var going = false;
+var seconds;
+var timerinterval;
+var defaultseconds = 120;
+function countdown(){
+	seconds = defaultseconds;
+	if (!going){
+		$("#countdownbutton").html("Reset Countdown");
+		going = true;
+		timerinterval = setInterval(tick,1000);
+	} else {
+		resetTimer();
+	}
+}
+function resetTimer(){
+		going = false;
+		clearInterval(timerinterval);
+		seconds = defaultseconds + 1;
+		tick();
+		$("#countdownbutton").html("Start Countdown");
+}
