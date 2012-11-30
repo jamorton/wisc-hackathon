@@ -84,3 +84,13 @@ footer {
 .shoutout {
   margin-bottom: 5px;
 }
+  .slides_container {
+	  			margin:auto;
+                width:400px;
+                height:270px;
+            }
+            .slides_container div {
+                width:400px;
+                height:270px;
+                display:block;
+            }

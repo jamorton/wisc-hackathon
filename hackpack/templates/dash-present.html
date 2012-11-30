@@ -3,9 +3,7 @@
 {% block use_nav %} {% endblock %}
 
 {% block content %}
-
 <div class="dashboard-title">{{ hackathon.title }}</div>
-
 <ul class="nav nav-tabs">
   <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
   <li class="tab"><a href="#tab-raffle" data-toggle="tab">Raffle</a></li>
@@ -15,36 +13,46 @@
     <div class="timer">
       <div id="clock">&nbsp;</div>
     </div>
-    <div class="song">
-      <i>Carly Rae Jepsen - &ldquo;Call Me Maybe&rdquo;</i>
-    </div>
-
+    <div class="song"> <i>Carly Rae Jepsen - &ldquo;Call Me Maybe&rdquo;</i> </div>
     <div class="row">
       <div class="span6">
         <h2>Announcements</h2>
+        {% for ann in anns %}
+        <h4>{{ ann.time.strftime("%I:%M %p") }}: </h4>
+        {{ ann.message }}
+        {%  endfor %}
       </div>
-
       <div class="span6">
         <h2>Shoutouts</h2>
-        <div id="shoutout-area" class="well">
-        </div>
+        <div id="shoutout-area" class="well"> </div>
         <form id="shoutout-form">
           <input type="text" placeholder="Shoutout..." name="shoutout-message" id="shoutout-message" />
         </form>
       </div>
     </div>
-
+    <div id="slides">
+      <div class="slides_container">
+        {% for image in photos %}
+        <div> <img src="{{image.source}}" style="max-width:400px"/> </div>
+        {% endfor %}
+      </div>
+      <script type="text/javascript">
+	  	$("#slides").slides({
+			preload: true,
+			play: 5000,
+			generatePagination: false
+      });
+	  </script> 
+    </div>
   </div>
   <div id="tab-raffle" class="tab-pane">
     <div id="rafflebutton" class="centered">
       <button class="btn-large btn btn-primary" onclick="setupRaffle({{hackathon.id}})">New Raffle</button>
     </div>
-    <div id="faces">
-    </div>
-    <div id="winner">
-    </div>
+    <div id="faces"> </div>
+    <div id="winner"> </div>
   </div>
- </div>
+</div>
 <script type="text/javascript">
   window.people = [];
   $(function() {
@@ -55,5 +63,5 @@
     shoutouts( {{ hackathon.id }} );
 
   });
-</script>
-{% endblock %}
+</script> 
+{% endblock %} 

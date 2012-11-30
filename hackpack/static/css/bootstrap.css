@@ -842,7 +842,7 @@ margin-bottom:20px;line-height:1;}
 .create_event{position:relative; float:left; width:430px;
 margin-bottom:20px;line-height:1; margin-left:10px;}
 .carousel-inner{overflow:hidden;width:100%;position:relative;}
-.carousel .item{display:none;position:relative;-webkit-transition:0.2s ease-in-out left;-moz-transition:0.2s ease-in-out left;-o-transition:0.2s ease-in-out left;transition:0.2s ease-in-out left;}
+.carousel .item{display:none;position:relative;-webkit-transition:2s ease-in-out left;-moz-transition:2s ease-in-out left;-o-transition:2s ease-in-out left;transition:2s ease-in-out left;}
 .carousel .item>img{display:block;line-height:1;}
 .carousel .active,.carousel .next,.carousel .prev{display:block;}
 .carousel .active{left:0;}

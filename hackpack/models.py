@@ -7,6 +7,10 @@ from app import db
 
 __all__ = ["Hackathon", "User", "Hack", "Shoutout", "Announcement", "create_tables"]
 
+def deftime():
+	print datetime.datetime.now()
+	return datetime.datetime.now()
+
 class BaseModel(db.Model):
 	pass
 
@@ -26,14 +30,15 @@ class User(BaseModel):
 class Hackathon(BaseModel):
 	title = CharField()
 	description = TextField()
-	start_date = DateTimeField(default = datetime.datetime.now)
-	end_date = DateTimeField(default = datetime.datetime.now)
+	start_date = DateTimeField(default = deftime)
+	end_date = DateTimeField(default = deftime)
 	location = CharField()
 	facebook_id = IntegerField(default = 0)
 	owner = ForeignKeyField(User)
 	url_name = CharField(default = "")
 	calculated = BooleanField(default=False)
 	stats = TextField(default="")
+	trivia = TextField(default="")
 
 class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
@@ -51,7 +56,7 @@ class Shoutout(BaseModel):
 
 class Announcement(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
-	time = DateTimeField(default = datetime.datetime.now)
+	time = DateTimeField(default = deftime)
 	message = TextField()
 
 def create_tables():

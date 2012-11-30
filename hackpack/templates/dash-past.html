@@ -8,9 +8,22 @@
 </div>
 <ul class="nav nav-tabs">
   <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
+  <li class="tab"><a href="#tab-presentation" data-toggle="tab">Presentations</a></li>
+  <li class="tab"><a href="#tab-addhack" data-toggle="tab">Add Hack</a></li>
 </ul>
 <div class="tab-content">
-  <div id="tab-dashboard" class="active tab-pane"> </div>
+  <div id="tab-dashboard" class="active tab-pane">
+
+    <h1 style="text-align: center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; color: #2FA4E7"><i>It's all over!</i></h1>
+
+    <h2>Stats</h2>
+
+    <b>Total git commits:</b>{{ stats["max-number-commits"] }} <br />
+    <b>Top commiter:</b> {{ stats["top-committer"] }} <br />
+    <b>Top 3 languages:</b> {{ stats["top3-languages"] }}
+
+    <!-- {"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 }) -->
+  </div>
   <div id="tab-presentation" class="tab-pane">
     <div class="centered">
       <div id="timer">2:00</div>
@@ -37,6 +50,46 @@
   </div>
 <div id="tab-addhack" class="tab-pane">
 <div class="rows">
+<div class="span5">
+ <form method="post" action="/hackathon/{{ hackathon.id }}/addhack">
+    <fieldset>
+      <h2>Submit Your Hack</h2>
+
+        <div class="control-group">
+          <label class="control-label"> <label for="title">Title</label> </label>
+          <input id="title" name="title" type="text" value="">
+        </div>
+
+        <div class="control-group">
+          <label class="control-label"> <label for="screenshot_url">Screenshot URL</label> </label>
+          <textarea id="screenshot_url" name="screenshot_url"></textarea>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label"> <label for="url">Project URL</label> </label>
+          <textarea id="url" name="url"></textarea>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label"> <label for="description">Description</label> </label>
+          <textarea id="description" name="description"></textarea>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label"> <label for="github_repo">Github Repo (optional)</label> </label>
+          <textarea id="github_repo" name="github_repo"></textarea>
+        </div>
+
+      <button type="submit" class="btn" onclick="$(this).disable();">Submit</button>
+    </fieldset>
+  </form>
+</div>
+<div class="span6">
+<div id="addhack">
+<h2>Congrats!</h2>
+<img src="/static/img/addhack.jpg"></img>
+<h2>You are done! </h2>
+</div>
 </div>
 </div>
 </div>
@@ -60,7 +113,7 @@ function nexthack(){
 	}
 	numshow(curpos);
 }
-function showme(t){		
+function showme(t){
 	$(".small").show();
 	$(".big").hide();
 	t.find(".small").hide();
@@ -109,5 +162,4 @@ if (url.match('#')) {
     });
 </script>
 
-{{ stats }}
 {% endblock %}

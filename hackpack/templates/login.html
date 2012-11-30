@@ -2,9 +2,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="row">
+<span class="span12 centered">
 <a href="#" id="login-button" class="btn btn-large btn-primary">Login with Facebook</a>
-
+</span>
+<!--<span class="span9 centered">
+<img src="/static/img/login_front.jpg" width="1152" height="1536" />
+</span>-->
 <script type="text/javascript">
   window.REDIRECT_URL = "{{ redirect_url }}";
   $(function() {
