@@ -3,4 +3,18 @@
 
 {% block content %}
     <h1>Landing Page</h1>
+
+    <ul class="nav nav-pills nav-stacked">
+
+	    {% for hackathon in hackathons %}
+	    <li>
+	    	<a href="#">
+			<h2>{{ hackathon.title }}  </h2>
+			{{ hackathon.description }}. AT: "font-weight:bold;">{{ hackathon.location }}
+			<p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
+		</a>
+	    </li>
+	    {% endfor %}
+    </ul>
+
 {% endblock %}
