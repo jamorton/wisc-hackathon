@@ -39,7 +39,7 @@ def dash(hackathon_id):
 
 	hacks = []
 
-	hack_q = Hack.select().where(hackathon = hackathon)
+	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 	for h in hack_q:
 		hacks.append(h)
 
