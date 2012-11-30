@@ -103,7 +103,7 @@ def walk(current_dir, languages):
 				languages["c"] = languages["c"] + 1
 			elif ".cpp" in name or ".CPP" in name:
 				if ( not languages.has_key("c++") ):
-					languages["c++"] = 0
+				languages["c++"] = 0
 				languages["c++"] = languages["c++"] + 1
 			elif "Android" in name or "android" in name:
 				if ( not languages.has_key("android") ):
@@ -152,9 +152,9 @@ def hack_get_all_time_stats(hackathon_id):
 		os.system("git clone "+original)
 		before = os.getcwd()
 		os.chdir(repo_name)
-		
+
 		repo_languages = walk(os.getcwd(), {})
-		
+
 		for language in repo_languages.keys():
 			if ( not languages.has_key(language) ):
 				languages[language] = 0

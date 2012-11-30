@@ -36,65 +36,39 @@
       {% endfor %}
     </ul>
   </div>
-<div id="tab-addhack" class="tab-pane"> 
+<div id="tab-addhack" class="tab-pane">
 <div class="rows">
 <div class="span5">
- <form method="post" action="">
+ <form method="post" action="./addhack">
     <fieldset>
       <h2>Submit Your Hack</h2>
 
-      
         <div class="control-group">
           <label class="control-label"> <label for="title">Title</label> </label>
           <input id="title" name="title" type="text" value="">
-        
-
         </div>
-      
+
         <div class="control-group">
-          <label class="control-label"> <label for="screenshot_url">Screenshot Url</label> </label>
+          <label class="control-label"> <label for="screenshot_url">Screenshot URL</label> </label>
           <textarea id="screenshot_url" name="screenshot_url"></textarea>
-        
-
         </div>
-      
-        <div class="control-group">
-          <label class="control-label"> <label for="github_repo">Github Repo</label> </label>
-          <textarea id="github_repo" name="github_repo"></textarea>
-        
 
-        </div>
-      
         <div class="control-group">
-          <label class="control-label"> <label for="url">Url</label> </label>
+          <label class="control-label"> <label for="url">Project URL</label> </label>
           <textarea id="url" name="url"></textarea>
-        
-
         </div>
-      
+
         <div class="control-group">
           <label class="control-label"> <label for="description">Description</label> </label>
           <textarea id="description" name="description"></textarea>
-        
-
         </div>
-      
+
         <div class="control-group">
-          <label class="control-label"> <label for="calculated">Calculated</label> </label>
-          <input id="calculated" name="calculated" type="checkbox" value="y">
-        
-
+          <label class="control-label"> <label for="github_repo">Github Repo (optional)</label> </label>
+          <textarea id="github_repo" name="github_repo"></textarea>
         </div>
-      
-        <div class="control-group">
-          <label class="control-label"> <label for="stats">Stats</label> </label>
-          <textarea id="stats" name="stats"></textarea>
-        
 
-        </div>
-      
-
-      <button type="submit" class="btn">Submit</button>
+      <button type="submit" class="btn" onclick="$(this).disable();">Submit</button>
     </fieldset>
   </form>
 </div>
@@ -116,7 +90,7 @@ function nexthack(){
 	if (curpos>count){
 		curpos = 1;
 	}
-	numshow(curpos);	
+	numshow(curpos);
 }
 function numshow(i){
 $(".small").show();
@@ -150,8 +124,14 @@ function shuffle(){
 					  return( isOddOrEven*isPosOrNeg );
 				})
 				// append list items to ul
-				.appendTo($ul);            
+				.appendTo($ul);
 		  });	}
-		  
-</script> 
-{% endblock %} 
+$(function() {
+
+    var url = document.location.toString();
+if (url.match('#')) {
+    $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+}
+    });
+</script>
+{% endblock %}
