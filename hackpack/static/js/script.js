@@ -113,7 +113,13 @@ window.fbAsyncInit = function() {
 $(function () {
     $("#create-hackathon-form").submit(function() {
         $.post("/ajax/create-hackathon", $(this).serialize(), function(data) {
-
+            if (data.error) {
+                $("#ch-error").text("Invalid form data");
+                $("#ch-error").show();
+            } else {
+                window.location = "/hackathon/" + String(data.hackathon_id);
+            }
         });
+        return false;
     });
 });

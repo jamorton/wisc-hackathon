@@ -6,6 +6,11 @@ from auth import auth
 import functools, urllib2
 from json import JSONDecoder
 from util import get_object_or_404
+from wtfpeewee.orm import model_form
+import urllib, urllib2
+from json import JSONDecoder
+import datetime
+
 
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
@@ -40,4 +45,35 @@ def ajax_get_event_attendees():
 	attending = decoder.decode(response.read())["data"]
 	return {"attending": attending}
 
-#@api_route("create-hackathon", requires
+
+HackathonForm = model_form(Hackathon, exclude=("facebook_id", "owner"))
+
+@api_route("create-hackathon", requires_login = True)
+def ajax_create_hackathon():
+	hack = Hackathon()
+
+	form = HackathonForm(request.form)
+	if form.validate():
+		form.populate_obj(hack)
+		hack.owner = auth.get_logged_in_user()
+		data = urllib.urlencode({
+				'access_token' : session["fb_token"],
+				'name' : hack.title,
+				'start_time' : datetime.date.isoformat(hack.start_date),
+				'end_time' : datetime.date.isoformat(hack.end_date),
+				'description' : hack.description,
+				'location' : hack.location})
+		print "data is " , data
+		req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
+		response = urllib2.urlopen(req)
+		decoder = JSONDecoder()
+		hack.facebook_id = decoder.decode(response.read())["id"]
+		hack.save()
+		return {"hackathon_id": hack.id}
+
+	else:
+		for field in form:
+			print field.label
+			for error in field.errors:
+				print error
+		return {"status": "error", "error": "DERP"}

@@ -9,7 +9,6 @@ import datetime
 import urllib, urllib2
 from json import JSONDecoder
 
-
 @app.route("/")
 @auth.login_required
 def index():
@@ -45,37 +44,7 @@ def dash(hackathon_id):
 	else:
 		return render_template("dash-past.html", hackathon = hackathon)
 
-HackathonForm = model_form(Hackathon, exclude=("facebook_id", "owner"))
 HackForm = model_form(Hack, exclude=("hackathon",))
-
-@app.route("/hackathon/create", methods=["GET", "POST"])
-@auth.login_required
-def hackathon_create():
-	hack = Hackathon()
-
-	if request.method == "POST":
-		form = HackathonForm(request.form)
-		if form.validate():
-			form.populate_obj(hack)
-			hack.owner = auth.get_logged_in_user()
-			data = urllib.urlencode({
-				'access_token' : session["fb_token"],
-				'name' : hack.title,
-				'start_time' : datetime.date.isoformat(hack.start_date),
-				'end_time' : datetime.date.isoformat(hack.end_date),
-				'description' : hack.description,
-				'location' : hack.location})
-			print "data is " , data
-			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
-			response = urllib2.urlopen(req)
-			decoder = JSONDecoder()
-			hack.facebook_id = decoder.decode(response.read())["id"]
-			hack.save()
-			return redirect(url_for("dash", hackathon_id = hack.id))
-	else:
-		form = HackathonForm()
-
-	return render_template("hackathon-create.html", form = form, active = "create")
 
 @app.route("/hackathon/<int:hackathon_id>/addhack", methods=["GET", "POST"])
 def hack_create(hackathon_id):

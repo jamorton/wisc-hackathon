@@ -31,7 +31,7 @@ class Hackathon(BaseModel):
 	location = CharField()
 	facebook_id = IntegerField(default = 0)
 	owner = ForeignKeyField(User)
-	url_name = CharField()
+	url_name = CharField(default = "")
 
 class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
