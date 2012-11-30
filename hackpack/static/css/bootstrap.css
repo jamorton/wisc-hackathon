@@ -117,7 +117,12 @@ small{font-size:85%;}
 strong{font-weight:bold;}
 em{font-style:italic;}
 cite{font-style:normal;}
-.muted{color:#999999;}
+.muted{
+background-color:#3B5998;
+margin-right:20px;
+padding:10px;
+color:#ffffff;
+}
 .text-warning{color:#126b9e;}
 a.text-warning:hover{color:#0d4c70;}
 .text-error{color:#bd4247;}
@@ -819,8 +824,10 @@ a.label:hover,a.badge:hover{color:#ffffff;text-decoration:none;cursor:pointer;}
 .accordion-heading .accordion-toggle{display:block;padding:8px 15px;}
 .accordion-toggle{cursor:pointer;}
 .accordion-inner{padding:9px 15px;border-top:1px solid #e5e5e5;}
-.carousel{position:relative; margin-right:370px;
+.carousel{position:relative;   
 margin-bottom:20px;line-height:1;}
+.create_event{position:relative; float:left; width:430px;
+margin-bottom:20px;line-height:1; margin-left:10px;}
 .carousel-inner{overflow:hidden;width:100%;position:relative;}
 .carousel .item{display:none;position:relative;-webkit-transition:0.6s ease-in-out left;-moz-transition:0.6s ease-in-out left;-o-transition:0.6s ease-in-out left;transition:0.6s ease-in-out left;}
 .carousel .item>img{display:block;line-height:1;}
