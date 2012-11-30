@@ -1,13 +1,14 @@
 
 from app import app
 from models import *
-from flask import render_template, request, url_for, redirect, session, flash
+from flask import render_template, request, url_for, redirect, session, flash, jsonify
 from auth import auth
 from wtfpeewee.orm import model_form
 from util import get_object_or_404
 import datetime
 import urllib, urllib2
 from json import JSONDecoder
+import json
 import os
 
 @app.route("/")
@@ -103,7 +104,7 @@ def walk(current_dir, languages):
 				languages["c"] = languages["c"] + 1
 			elif ".cpp" in name or ".CPP" in name:
 				if ( not languages.has_key("c++") ):
-				languages["c++"] = 0
+					languages["c++"] = 0
 				languages["c++"] = languages["c++"] + 1
 			elif "Android" in name or "android" in name:
 				if ( not languages.has_key("android") ):
@@ -115,9 +116,12 @@ def walk(current_dir, languages):
 def hack_get_all_time_stats(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 
+	"""
 	if hackathon.calculated:
+		print hackathon.stats
 		return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)#RENDER THE RIGHT TEMPLATE HERE
-	
+		"""
+
 	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 
 	user_commits = {}
@@ -128,7 +132,9 @@ def hack_get_all_time_stats(hackathon_id):
 	languages = {}
 
 	for h in hack_q:
-		repo_address = h.url
+		if len(h.github_repo) == "":
+			continue
+		repo_address = h.github_repo
 		original = repo_address
 		repo_address = repo_address.replace("https://", "").replace("http://", "").replace("git@github.com:", "").replace("github.com/", "").replace(".git", "")
 		repo_owner = repo_address.split("/")[0]
@@ -189,5 +195,6 @@ def hack_get_all_time_stats(hackathon_id):
 	top3 = first + ", " + second + ", " + third
 
 	hackathon.calculated = True
-	hackathon.stats = {"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 }
+	hackathon.stats = json.dumps({"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 })
+	hackathon.save()
 	return render_template("dash-past.html", hackathon = hackathon, stats = hackathon.stats)

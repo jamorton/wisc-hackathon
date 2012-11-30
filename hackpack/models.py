@@ -32,6 +32,8 @@ class Hackathon(BaseModel):
 	facebook_id = IntegerField(default = 0)
 	owner = ForeignKeyField(User)
 	url_name = CharField(default = "")
+	calculated = BooleanField(default=False)
+	stats = TextField(default="")
 
 class Hack(BaseModel):
 	hackathon = ForeignKeyField(Hackathon)
@@ -41,8 +43,6 @@ class Hack(BaseModel):
 	github_repo = TextField(default="")
 	url = TextField(default = "")
 	description = TextField(default = "")
-	calculated = BooleanField(default=False)
-	stats = TextField(default="")
 
 class Shoutout(BaseModel):
 	user = ForeignKeyField(User)

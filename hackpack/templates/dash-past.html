@@ -39,7 +39,7 @@
 <div id="tab-addhack" class="tab-pane">
 <div class="rows">
 <div class="span5">
- <form method="post" action="./addhack">
+ <form method="post" action="/hackathon/{{ hackathon.id }}/addhack">
     <fieldset>
       <h2>Submit Your Hack</h2>
 
@@ -134,4 +134,6 @@ if (url.match('#')) {
 }
     });
 </script>
+
+{{ stats }}
 {% endblock %}
