@@ -97,11 +97,11 @@ def walk(current_dir, languages):
 				if ( not languages.has_key("java") ):
 					languages["java"] = 0
 				languages["java"] = languages["java"] + 1
-			elif ".c" in name or ".C" in name:
+			elif name.endswith(".c") or name.endswith(".C"):
 				if ( not languages.has_key("c") ):
 					languages["c"] = 0
 				languages["c"] = languages["c"] + 1
-			elif ".cpp" in name or ".CPP" in name:
+			elif name.endswith(".cpp") or name.endswith(".CPP"):
 				if ( not languages.has_key("c++") ):
 					languages["c++"] = 0
 				languages["c++"] = languages["c++"] + 1
@@ -109,6 +109,18 @@ def walk(current_dir, languages):
 				if ( not languages.has_key("android") ):
 					languages["android"] = 0
 				languages["android"] = languages["android"] + 1
+			elif ".css" in name:
+				if ( not languages.has_key("css") ):
+					languages["css"] = 0
+				languages["css"] = languages["css"] + 1
+			elif ".erb" in name:
+				if ( not languages.has_key("ruby") ):
+					languages["ruby"] = 0
+				languages["ruby"] = languages["ruby"] + 1
+			elif ".m" in name:
+				if ( not languages.has_key("objective-c") ):
+					languages["objective-c"] = 0
+				languages["objective-c"] = languages["objective-c"] + 1
 	return languages
 
 @app.route("/hackathon/<int:hackathon_id>/alltimestats")
