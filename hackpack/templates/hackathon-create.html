@@ -1,8 +1,64 @@
 
 {% extends "base.html" %}
 
-{% from "_util.html" import render_form %}
-
 {% block content %}
-  {{ render_form("Create a Hackathon", form, "Create") }}
-{% endblock %}
+  <form method="post" action="">
+    <fieldset>
+      <h2>Create a Hackathon</h2>
+
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="title">Title</label> </label>
+          <input id="title" name="title" type="text" value="">
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="description">Description</label> </label>
+          <textarea id="description" name="description"></textarea>
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="start_date">Start Date</label> </label>
+          <input class="date-widget  datetime-widget" id="start_date" name="start_date-date" type="text" value="2012-11-29">
+	  <input class="time-widget  datetime-widget" id="start_" name="start_date-time" type="text" value="22:47:57">
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="end_date">End Date</label> </label>
+          <input class="date-widget  datetime-widget" id="end_date" name="end_date-date" type="text" value="2012-11-29">
+	  <input class="time-widget  datetime-widget" id="end_date" name="end_date-time" type="text" value="22:47:57">
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="location">Location</label> </label>
+          <input id="location" name="location" type="text" value="">
+        
+
+        </div>
+      
+        <div class="control-group">
+          <label class="control-label"> <label for="url_name">Url Name</label> </label>
+          <input id="url_name" name="url_name" type="text" value="">
+        
+
+        </div>
+      
+
+      <button type="submit" class="btn btn-success">Create</button>
+    </fieldset>
+	<script>
+	$('#start_date').datetimepicker({
+		altField: "start_date_time"
+	});
+	$('#end_date').datetimepicker({
+		altField: "end_date_time"
+	});
+	</script>
+  </form>
+ {% endblock %}

@@ -3,7 +3,8 @@ from flask import request, session, jsonify
 from app import app
 from models import *
 from auth import auth
-import functools
+import functools, urllib2
+from json import JSONDecoder
 
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
@@ -27,3 +28,15 @@ def ajax_login():
 	user = User.get_or_create(fbid)
 	auth.login_user(user)
 	session["fb_token"] = request.form["token"]
+
+@api_route("attendees")
+def ajax_get_event_attendees():
+	fbid = request.form["fbid"]
+	hackathon_id = request.form["hackathon_id"]
+
+	req = urllib2.Request("https://graph.facebook.com/"+hackathon_id+"/attending?access_token="+session["fb_token"])
+	response = urllib2.urlopen(req)
+	decoder = JSONDecoder()
+	attending = decoder.decode(response.read())["data"]
+	return attending
+

@@ -51,10 +51,14 @@ def dash(hackathon_id):
 	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
 	now = datetime.datetime.now()
 
-	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon_id)+"/attending", {})
+	print "access_token = ", session["fb_token"]
+
+	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/attending?access_token="+session["fb_token"])
 	response = urllib2.urlopen(req)
 	decoder = JSONDecoder()
 	attending = decoder.decode(response.read())["data"]
+
+	print "returned", attending
 
 	if now < hackathon.start_date:
 		return render_template("dash-future.html", hackathon = hackathon, attending = attending)
@@ -86,8 +90,7 @@ def hackathon_create():
 			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
 			response = urllib2.urlopen(req)
 			decoder = JSONDecoder()
-			event_id = decoder.decode(response.read())["id"]
-			hack.facebook_id = int(event_id)
+			hack.facebook_id = decoder.decode(response.read())["id"]
 			hack.save()
 			return redirect(url_for("dash", hackathon_id = hack.id))
 	else:
