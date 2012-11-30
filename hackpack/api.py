@@ -11,6 +11,7 @@ import urllib, urllib2
 from json import JSONDecoder
 import datetime
 from trivia import trivia_info
+import random
 
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
@@ -70,8 +71,11 @@ def ajax_create_hackathon():
 		hack.facebook_id = decoder.decode(response.read())["id"]
 		trivia_str = ""
 		for question in trivia_info:
-			trivia_str += question + "|" + trivia_info[question]
+			trivia_str += question + "|" + trivia_info[question] + "\n"
 
+		trivia_str = trivia_str[:-1]
+
+		hack.cur_question = trivia_str.split("\n")[0]
 		hack.trivia = trivia_str
 
 		hack.save()
@@ -101,7 +105,7 @@ def ajax_updates():
 	last_id = shoutouts_after
 	if len(out):
 		last_id = out[-1]["id"]
-	return {"shoutouts": out, "last_id": last_id}
+	return {"shoutouts": out, "last_id": last_id, "cur_question": hackathon.cur_question.split("|")[0]}
 
 
 @api_route("repo-stats", requires_login=True)
@@ -137,3 +141,16 @@ def ajax_set_questions():
 	hackathon = get_object_or_404(Hackathon, id = hackathon)
 	hackathon.trivia = questions
 	hackathon.save()
+
+
+@api_route("guess", requires_login=True)
+def ajax_guess():
+	hackathon = get_object_or_404(Hackathon, id = request.form["hackathon_id"])
+	guess = request.form["guess"]
+
+	if guess.strip().lower() == hackathon.cur_question.split("|")[1].strip().lower():
+		hackathon.cur_question = random.choice(hackathon.trivia.split("\n"))
+		hackathon.save()
+		return {"guess": "correct"}
+	else:
+		return {"guess": "incorrect"}

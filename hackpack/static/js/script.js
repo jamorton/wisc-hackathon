@@ -181,6 +181,7 @@ function checkUpdates(hid) {
             var html = '<div class="shoutout"><img style="width: 40px; height: 40px;" src="https://graph.facebook.com/'+so.fbid+'/picture" /> <b><fb:name uid="'+so.fbid+'" capitalize="true" />:</b> ' + so.message + '</div>';
             $("#shoutout-area").prepend(html);
         }
+        $("#trivia-question").html(data.cur_question);
         FB.XFBML.parse(document.getElementById("shoutout-area"));
         lastId = data.last_id;
     });

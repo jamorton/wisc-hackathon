@@ -49,7 +49,10 @@
       </div>
       <div class="span6">
         <h2>Trivia</h2>
-
+        <blockquote id="trivia-question">{{ hackathon.cur_question.split("|")[0] }}</blockquote>
+        <form id="answer-trivia" method="POST" action="">
+          <input id="answer" name="answer" type="text" placeholder="Guess..." style="margin-bottom: 0px;" /> <button class="btn" type="submit">Guess</button>
+        </form>
       </div>
     </div>
   </div>
@@ -62,7 +65,7 @@
   </div>
 </div>
 
-<div style="text-align: center;">{{males}} males and {{females}} females</div>
+<!--<div style="text-align: center;">{{males}} males and {{females}} females</div>-->
 
 {% if hackathon.owner == user %}
 <div style="text-align: center;">
@@ -78,6 +81,13 @@
 	clock(secondsremaining);
 
     shoutouts( {{ hackathon.id }} );
+
+    $("#answer-trivia").submit(function() {
+      $.post("/ajax/guess", {"hackathon_id": "{{hackathon.id}}", "guess": $("#answer").val()}, function(data) {
+      });
+      $("#answer").val("");
+      return false;
+    });
 
   });
 </script>
