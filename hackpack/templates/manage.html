@@ -3,14 +3,38 @@
 
 {% block content %}
 
-    <h2>Manage &ldquo;{{ hackathon.title }}&rdquo;</h2>
+<h2>Manage &ldquo;{{ hackathon.title }}&rdquo;</h2>
 
 
+<div class="row">
+  <div class="span6">
     <h4>Add Announcement</h4>
     <form action="" method="POST" id="announcement-form">
-      <textarea name="message" style="width: 500px; height: 50px; margin-bottom: 0px;"></textarea>
-      <button type="submit" name="submit" class="btn btn-primary" style="height: 60px; width: 90px;">Add</button>
+      <textarea name="message" style="width: 95%; height: 75px;"></textarea>
+      <button type="submit" name="submit" class="btn btn-primary">Add</button>
     </form>
+  </div>
+  <div class="span6">
+    <h4>Set Trivia <small>(format: question, answer)</h4>
 
+    <form action="" method="POST" id="trivia-form">
+      <textarea name="questions" id="trivia-questions" style="width: 95%; height:125px;">{{ hackathon.trivia }}</textarea>
+      <button type="submit" name="submit" class="btn btn-primary">Set</button>
+    </form>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function() {
+    $("#trivia-form").submit(function() {
+      $("#trivia-form button").hide();
+      $.post("/ajax/set-questions", {"hackathon_id": "{{ hackathon.id }}", "questions": $("#trivia-questions").val()}, function(data) {
+        $("#trivia-form button").show();
+      });
+      return false;
+    });
+  });
+</script>
 
 {% endblock %}

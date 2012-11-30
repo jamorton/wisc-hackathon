@@ -129,4 +129,4 @@ def ajax_set_questions():
 
 	hackathon = get_object_or_404(Hackathon, id = hackathon)
 	hackathon.trivia = questions
-
+	hackathon.save()
