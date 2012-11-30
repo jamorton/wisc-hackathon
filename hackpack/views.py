@@ -215,6 +215,25 @@ def dash(hackathon_id):
 	photos = decoder.decode(response.read())
 	photos = photos["data"]
 
+	number_males = 0
+	number_females = 0
+
+	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/attending?access_token="+session["fb_token"])
+	response = urllib2.urlopen(req)
+	response = response.read()
+	people = response["data"]
+
+	for person in people:
+		pid = person["id"]
+
+		req = urllib2.Request("https://graph.facebook.com/"+str(pid))
+		response = urllib2.urlopen(req)
+		response = response.read()
+		if ( response["gender"] == "male" ):
+			number_males = number_males + 1
+		elif ( response["gender"] == "female" ):
+			number_females = number_females + 1
+
 
 	hack_q = Hack.select().where(Hack.hackathon==hackathon)
 	for h in hack_q:
@@ -222,7 +241,7 @@ def dash(hackathon_id):
 		
 
 	if now < hackathon.start_date:
-		return render_template("dash-future.html", hackathon = hackathon, photos = photos)
+		return render_template("dash-future.html", hackathon = hackathon, photos = photos, males_females = {"males": number_males, "females" : number_females})
 	elif now < hackathon.end_date:
 		req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/photos?access_token="+session["fb_token"])
 		response = urllib2.urlopen(req)
@@ -230,7 +249,7 @@ def dash(hackathon_id):
 		photos = decoder.decode(response.read())
 		photos = photos["data"]
 		anns = Announcement.select().where(Announcement.hackathon == hackathon).order_by(Announcement.time)
-		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns, photos = photos)
+		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns, photos = photos, males_females = {"males": number_males, "females" : number_females})
 	else:
 		return hack_get_all_time_stats(hackathon, hacks)
 
