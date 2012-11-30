@@ -37,9 +37,9 @@
   <ul class="nav nav-pills nav-stacked">
     {% for hackathon in hackathons_now %}
       <li>
-	    <h3><a href="#">{{ hackathon.title }}</a></h3>
+      <h3><a href="/hackathon/{{hackathon.id}}">{{ hackathon.title }}</a></h3>
         {{ hackathon.description }}. AT: {{ hackathon.location }}
-        <p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
+        <p>FROM: {{ hackathon.start_date }} TO: {{ hackathon.end_date }} </p>
 	  </li>
     {% endfor %}
   </ul>
@@ -52,7 +52,7 @@
       <div class="hackathon-item">
         <h3><a href="#">{{ hackathon.title }}</a></h3>
         {{ hackathon.description }}. AT: {{ hackathon.location }}
-        <p>FROM: {{ hackathon.start_time }} TO: {{ hackathon.end_time }} </p>
+        <p>FROM: {{ hackathon.start_date }} TO: {{ hackathon.end_date }} </p>
       </div>
     {% endfor %}
   </div>
