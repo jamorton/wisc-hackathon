@@ -37,8 +37,16 @@ def hackathon_create():
 		if form.validate():
 			form.populate_obj(hack)
 			hack.owner = auth.get_logged_in_user()
+			data = urllib.encode({
+				'name' : hack.title,
+				'start_time' : hack.start_time,
+				'end_time' : hack.end_time,
+				'description' : hack.description,
+				'location' : hack.location})
+			event_id = urllib2.urlopen(urllib2.Request("http://www.facebook.com/"+hack.owner+"/events", data))
+			hack.facebook_id = event_id
 			hack.save()
-			return redirect(url_for("dash", hackathon_id = hack.id))
+			return redirect(url_for("dash", event_id))
 	else:
 		form = HackathonForm()
 
