@@ -88,7 +88,7 @@ function setupRaffle(hid) {
 
 function fbLogin() {
     $("#login-button").click(function() {
-        FB.login(loginResponse, {scope: "create_event"});
+        FB.login(loginResponse, {scope: "create_event user_photos"});
     });
 }
 

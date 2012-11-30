@@ -11,6 +11,50 @@ from json import JSONDecoder
 import json
 import os
 
+@app.route("/")
+@auth.login_required
+def index():
+	hackathon_q = Hackathon.select()
+
+	hackathons_now = []
+	hackathons_future = []
+	hackathon_query = []
+	now = datetime.datetime.now()
+	for h in hackathon_q:
+
+		if now < h.start_date:
+			hackathons_future.append(h)
+		elif now < h.end_date:
+			hackathons_now.append(h)
+		hackathon_query.append(h)
+
+	return render_template("index.html",
+						   hackathons_now = hackathons_now,
+						   hackathons_future = hackathons_future,
+						   hackathon_query = hackathon_query,
+						   active = "home")
+
+
+HackForm = model_form(Hack, exclude=("hackathon",))
+
+@app.route("/hackathon/<int:hackathon_id>/addhack", methods=["GET", "POST"])
+def hack_create(hackathon_id):
+	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+	hack = Hack()
+
+	if request.method == "POST":
+		form = HackForm(request.form)
+		if form.validate():
+			form.populate_obj(hack)
+			hack.hackathon = hackathon
+			hack.save()
+			flash("Your hack was successfully added", "success")
+			return redirect(url_for("dash", hackathon_id = hackathon.id))
+	else:
+		form = HackForm()
+
+	return render_template("hack-create.html", form = form, hackathon = hackathon)
+
 def walk(current_dir, languages):
 	for root, dirs, files in os.walk(current_dir):
 		for dire in dirs:
@@ -146,29 +190,6 @@ def hack_get_all_time_stats(hackathon, hacks):
 	hackathon.save()
 	return render_template("dash-past.html", hackathon = hackathon, stats = JSONDecoder().decode(hackathon.stats), hacks = hacks)
 
-
-@app.route("/")
-@auth.login_required
-def index():
-	hackathon_q = Hackathon.select()
-
-	hackathons_now = []
-	hackathons_future = []
-	hackathon_query = []
-	now = datetime.datetime.now()
-	for h in hackathon_q:
-
-		if now < h.start_date:
-			hackathons_future.append(h)
-		elif now < h.end_date:
-			hackathons_now.append(h)
-		hackathon_query.append(h)
-
-	return render_template("index.html",
-						   hackathons_now = hackathons_now,
-						   hackathons_future = hackathons_future,
-						   hackathon_query = hackathon_query,
-						   active = "home")
 
 @app.route("/hackathon/<int:hackathon_id>/manage", methods=["GET", "POST"])
 def manage_hackathon(hackathon_id):
