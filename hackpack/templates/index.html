@@ -50,7 +50,7 @@
   <div>
     {% for hackathon in hackathons_future %}
       <div class="hackathon-item">
-        <h3><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a></h3>
+	    <h3><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a></h3>
         {{ hackathon.description }}. AT: {{ hackathon.location }}
         <p>FROM: {{ hackathon.start_date }} TO: {{ hackathon.end_date }} </p>
       </div>
