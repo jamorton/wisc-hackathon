@@ -1,0 +1,25 @@
+
+{% macro render_form(title, form, submit_text) -%}
+  <form method="post" action="">
+    <fieldset>
+      <legend>{{ title }}</legend>
+
+      {% for field in form %}
+        <div class="control-group{% if field.errors %} error{% endif %}">
+          <label class="control-label"> {{ field.label }} </label>
+          {{ field }}
+        {% if field.errors %}
+          <span class="help-inline">
+            {% for error in field.errors %}
+              {{ error|e }}
+            {% endfor %}
+          </span>
+        {% endif %}
+
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn">{{ submit_text }}</button>
+    </fieldset>
+  </form>
+{%- endmacro %}

@@ -1,5 +1,5 @@
 
-from flask import render_template, g, session
+from flask import render_template, g, session, request
 from flask_peewee.auth import Auth
 from app import app, db
 from models import *
@@ -10,7 +10,9 @@ class CustomAuth(Auth):
 		return User
 
 	def login(self):
-		return render_template("login.html")
+		return render_template("login.html",
+							   redirect_url = request.args.get('next') or \
+								   self.default_next_url)
 
 	def login_user(self, user):
 		session['logged_in'] = True
