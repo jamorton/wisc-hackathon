@@ -34,6 +34,16 @@ def index():
 						   hackathon_query = hackathon_query,
 						   active = "home")
 
+@app.route("/hackathon/<int:hackathon_id>/manage", methods=["GET", "POST"])
+def manage_hackathon(hackathon_id):
+	hackathon = get_object_or_404(Hackathon, id = hackathon_id)
+
+	if request.method == "POST":
+		ann = Announcement(hackathon = hackathon, message = request.form["message"])
+		ann.save()
+		return redirect(url_for("dash", hackathon_id = hackathon.id))
+
+	return render_template("manage.html", hackathon = hackathon)
 
 @app.route("/hackathon/<int:hackathon_id>")
 def dash(hackathon_id):
@@ -49,7 +59,8 @@ def dash(hackathon_id):
 	if now < hackathon.start_date:
 		return render_template("dash-future.html", hackathon = hackathon)
 	elif now < hackathon.end_date:
-		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks)
+		anns = Announcement.select().where(Announcement.hackathon == hackathon).order_by(Announcement.time)
+		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, anns = anns)
 	else:
 		return render_template("dash-past.html", hackathon = hackathon, hacks = hacks)
 
