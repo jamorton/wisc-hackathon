@@ -10,8 +10,29 @@ from datetime import date
 
 @app.route("/")
 @auth.login_required
-def dash_index():
-	return render_template("index.html")
+def index():
+
+	hackathon_q = Hackathon.select()
+	
+	hackathons = []
+	for h in hackathon_q:
+
+		end_date = "NONE"
+		if ( h.end_date != "" ):
+			end_date = h.end_date
+		location = "NONE"
+		if ( h.location != "" ):
+			location = h.location
+
+		hackathons.append({
+			'title' : h.title,
+			'description' : h.description,
+			'start_time' : h.start_date,
+			'end_time' : end_date,
+			'location' : location
+			})
+
+	return render_template("index.html", hackathons = hackathons)
 
 @app.route("/hackathon/<int:hackathon_id>")
 def dash(hackathon_id):
@@ -40,10 +61,10 @@ def hackathon_create():
 			data = urllib.urlencode({
 				'access_token' : session["fb_token"],
 				'name' : hack.title,
-				'start_time' : date.isoformat(hack.start_date)})
-				#'end_time' : hack.end_date,
-				#'description' : hack.description,
-				#'location' : hack.location})
+				'start_time' : date.isoformat(hack.start_date),
+				'end_time' : date.isoformat(hack.end_date),
+				'description' : hack.description,
+				'location' : hack.location})
 			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
 			response = urllib2.urlopen(req)
 			event_id = response.read()
