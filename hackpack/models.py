@@ -38,7 +38,8 @@ class Hack(BaseModel):
 	title = CharField()
 	screenshot_url = TextField(default="")
 	github_repo = TextField(default="")
-	url = TextField()
+	url = TextField(default = "")
+	description = TextField(default = "")
 
 def create_tables():
 	Hackathon.create_table()

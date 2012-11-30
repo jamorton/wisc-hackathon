@@ -15,18 +15,28 @@ from json import JSONDecoder
 def index():
 	hackathon_q = Hackathon.select()
 
-	hackathons = []
+	hackathons_now = []
+	hackathons_future = []
+	now = datetime.datetime.now()
 	for h in hackathon_q:
 
-		hackathons.append({
+		hd = {
 			'title' : h.title,
 			'description' : h.description,
 			'start_time' : h.start_date,
 			'end_time' : end_date,
 			'location' : location
-			})
+		}
 
-	return render_template("index.html", hackathons = hackathons)
+		if now < h.start_date:
+			hackathons_future.append(hd)
+		elif now < h.end_date:
+			hackathons_now.append(hd)
+
+	return render_template("index.html",
+						   hackathons_now = hackathons_now,
+						   hackathons_future = hackathons_future,
+						   active = "home")
 
 
 @app.route("/hackathon/<int:hackathon_id>")
@@ -75,7 +85,7 @@ def hackathon_create():
 	else:
 		form = HackathonForm()
 
-	return render_template("hackathon-create.html", form = form)
+	return render_template("hackathon-create.html", form = form, active = "create")
 
 @app.route("/hackathon/<int:hackathon_id>/addhack", methods=["GET", "POST"])
 def hack_create(hackathon_id):
