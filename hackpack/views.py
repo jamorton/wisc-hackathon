@@ -24,8 +24,8 @@ def index():
 			'title' : h.title,
 			'description' : h.description,
 			'start_time' : h.start_date,
-			'end_time' : end_date,
-			'location' : location
+			'end_time' : h.end_date,
+			'location' : h.location
 		}
 
 		if now < h.start_date:
