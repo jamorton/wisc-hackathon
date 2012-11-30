@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Manage &ldquo;{{ hackathon.title }}&rdquo;</h2>
+
+
+    <h4>Add Announcement</h4>
+    <form action="" method="POST" id="announcement-form">
+      <textarea name="message" style="width: 500px; height: 50px; margin-bottom: 0px;"></textarea>
+      <button type="submit" name="submit" class="btn btn-primary" style="height: 60px; width: 90px;">Add</button>
+    </form>
+
+
+{% endblock %}

@@ -195,5 +195,5 @@ function shoutouts(hid) {
         });
         return false;
     });
-    setInterval("checkUpdates("+hid+")", 1000);
+    setInterval("checkUpdates("+hid+")", 2000);
 }
