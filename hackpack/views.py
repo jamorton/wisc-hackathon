@@ -1,7 +1,7 @@
 
 from app import app
 from models import *
-from flask import render_template, request, url_for, redirect, session
+from flask import render_template, request, url_for, redirect, session, flash
 from auth import auth
 from wtfpeewee.orm import model_form
 from util import get_object_or_404
@@ -11,7 +11,30 @@ import urllib, urllib2
 @app.route("/")
 @auth.login_required
 def index():
-	return render_template("index.html")
+	pass
+"""
+	hackathon_q = Hackathon.select()
+
+	hackathons = []
+	for h in hackathon_q:
+
+		end_date = "NONE"
+		if ( h.end_date != "" ):
+			end_date = h.end_date
+		location = "NONE"
+		if ( h.location != "" ):
+			location = h.location
+
+		hackathons.append({
+			'title' : h.title,
+			'description' : h.description,
+			'start_time' : h.start_date,
+			'end_time' : end_date,
+			'location' : location
+			})
+
+	return render_template("index.html", hackathons = hackathons)
+"""
 
 @app.route("/hackathon/<int:hackathon_id>")
 def dash(hackathon_id):
@@ -41,10 +64,10 @@ def hackathon_create():
 			data = urllib.urlencode({
 				'access_token' : session["fb_token"],
 				'name' : hack.title,
-				'start_time' : hack.start_date.isoformat()})
-				#'end_time' : hack.end_date,
-				#'description' : hack.description,
-				#'location' : hack.location})
+				'start_time' : datetime.date.isoformat(hack.start_date),
+				'end_time' : datetime.date.isoformat(hack.end_date),
+				'description' : hack.description,
+				'location' : hack.location})
 			req = urllib2.Request("https://graph.facebook.com/"+str(hack.owner.facebook_id)+"/events", data)
 			response = urllib2.urlopen(req)
 			event_id = response.read()
@@ -70,8 +93,8 @@ def hack_create(hackathon_id):
 			form.populate_obj(hack)
 			hack.hackathon = hackathon
 			hack.save()
-			flash("success", "Your hack was successfully added")
-			return redirect(url_for("dash", hackathon_id = hack.id))
+			flash("Your hack was successfully added", "success")
+			return redirect(url_for("dash", hackathon_id = hackathon.id))
 	else:
 		form = HackForm()
 
