@@ -44,7 +44,7 @@ def dash(hackathon_id):
 		hacks.append(h)
 
 	if now < hackathon.start_date:
-		return render_template("dash-future.html", Hack.hackathon == hackathon)
+		return render_template("dash-future.html", hackathon == hackathon)
 	elif now < hackathon.end_date:
 		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks)
 	else:
