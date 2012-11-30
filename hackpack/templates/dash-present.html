@@ -15,6 +15,20 @@
     <div class="timer">
       <div id="clock">&nbsp;</div>
     </div>
+
+    <div class="row">
+      <div class="span6">&nbsp;</div>
+
+      <div class="span6">
+        <h2>Shoutouts</h2>
+        <div id="shoutout-area" class="well">
+        </div>
+        <form id="shoutout-form">
+          <input type="text" placeholder="Shoutout..." name="shoutout-message" id="shoutout-message" />
+        </form>
+      </div>
+    </div>
+
   </div>
   <div id="tab-raffle" class="tab-pane">
     <div id="rafflebutton" class="centered">
@@ -32,6 +46,9 @@
     var endDate = new Date("{{ hackathon.end_date }}");
 	var secondsremaining = (endDate.getTime() - (new Date()).getTime())/1000;
 	clock(secondsremaining);
+
+    shoutouts( {{ hackathon.id }} );
+
   });
 </script>
 {% endblock %}
