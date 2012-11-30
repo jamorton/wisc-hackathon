@@ -22,14 +22,6 @@ function updateClock(){
 	}
 }
 
-function dashboard(){
-	$("#tabs").tabs();	
-	$(".tab").click(function() {
-		$(".tab").removeClass("active");
-	 	$(this).addClass("active");
-	});
-}
-
 function loginResponse(response) {
     if (response.status == "connected") {
         $.post("/ajax/login",
@@ -63,8 +55,8 @@ function runRaffle(){
 	}
 }
 
-function setupRaffle(data){
-	var json = $.parseJSON(data);
+function setupRaffle(hid) {
+    $.post()
 	$("#faces").empty();
 	$("#winner").empty();
 	clearInterval(raffleInterval);

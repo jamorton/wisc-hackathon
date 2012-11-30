@@ -1,9 +1,11 @@
 
 /* custom style */
 #clock{
-	font-size:40px;
-	font-weight:bold;
+	font-size:60px;
 	text-align:center;
+    line-height: 60px;
+    padding-bottom: 10px;
+
 }
 .tablelabel{
 	margin-top:14px;
@@ -37,4 +39,8 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 100;
   font-size: 50px;
+}
+
+ul.nav.nav-tabs {
+  margin-bottom: 10px;
 }
