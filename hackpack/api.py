@@ -96,6 +96,7 @@ def ajax_updates():
 		last_id = out[-1]["id"]
 	return {"shoutouts": out, "last_id": last_id}
 
+
 @api_route("repo-stats", requires_login=True)
 def ajax_get_repo_stats():
 	repo_address = request.form["repo_address"]

@@ -46,12 +46,19 @@ def dash(hackathon_id):
 	for h in hack_q:
 		hacks.append(h)
 
+	hackathon = get_object_or_404(Hackathon, id = request.form["hackathon_id"])
+	req = urllib2.Request("https://graph.facebook.com/"+str(hackathon.facebook_id)+"/photos?access_token="+session["fb_token"])
+	response = urllib2.urlopen(req)
+	decoder = JSONDecoder()
+	photos = decoder.decode(response.read())
+	photos = photos["data"]
+
 	if now < hackathon.start_date:
-		return render_template("dash-future.html", hackathon = hackathon)
+		return render_template("dash-future.html", hackathon = hackathon, photos = photos)
 	elif now < hackathon.end_date:
-		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks)
+		return render_template("dash-present.html", hackathon = hackathon, hacks = hacks, photos = photos)
 	else:
-		return render_template("dash-past.html", hackathon = hackathon, hacks = hacks)
+		return render_template("dash-past.html", hackathon = hackathon, hacks = hacks, photos = photos)
 
 HackForm = model_form(Hack, exclude=("hackathon",))
 
