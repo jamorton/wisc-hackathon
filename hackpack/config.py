@@ -5,7 +5,7 @@ class Config(object):
 	DEBUG = False
 	DATABASE = {
 		'engine': 'peewee.SqliteDatabase',
-		'name': 'dailysnap.db'
+		'name': 'hackpack.db'
 	}
 	UPLOAD_DIR = os.path.join(os.path.dirname(__file__), 'uploads')
 	SECRET_KEY = "none"
