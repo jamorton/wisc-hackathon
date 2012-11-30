@@ -118,7 +118,7 @@ def walk(current_dir, languages):
 				if ( not languages.has_key("ruby") ):
 					languages["ruby"] = 0
 				languages["ruby"] = languages["ruby"] + 1
-			elif ".m" in name:
+			elif name.endswith(".m"):
 				if ( not languages.has_key("objective-c") ):
 					languages["objective-c"] = 0
 				languages["objective-c"] = languages["objective-c"] + 1

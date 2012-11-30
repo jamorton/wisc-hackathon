@@ -8,8 +8,6 @@
 </div>
 <ul class="nav nav-tabs">
   <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
-  <li class="tab"><a href="#tab-presentation" data-toggle="tab">Presentations</a></li>
-  <li class="tab"><a href="#tab-addhack" data-toggle="tab">Add Hack</a></li>
 </ul>
 <div class="tab-content">
   <div id="tab-dashboard" class="active tab-pane"> </div>
@@ -39,46 +37,6 @@
   </div>
 <div id="tab-addhack" class="tab-pane">
 <div class="rows">
-<div class="span5">
- <form method="post" action="/hackathon/{{ hackathon.id }}/addhack">
-    <fieldset>
-      <h2>Submit Your Hack</h2>
-
-        <div class="control-group">
-          <label class="control-label"> <label for="title">Title</label> </label>
-          <input id="title" name="title" type="text" value="">
-        </div>
-
-        <div class="control-group">
-          <label class="control-label"> <label for="screenshot_url">Screenshot URL</label> </label>
-          <textarea id="screenshot_url" name="screenshot_url"></textarea>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label"> <label for="url">Project URL</label> </label>
-          <textarea id="url" name="url"></textarea>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label"> <label for="description">Description</label> </label>
-          <textarea id="description" name="description"></textarea>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label"> <label for="github_repo">Github Repo (optional)</label> </label>
-          <textarea id="github_repo" name="github_repo"></textarea>
-        </div>
-
-      <button type="submit" class="btn" onclick="$(this).disable();">Submit</button>
-    </fieldset>
-  </form>
-</div>
-<div class="span6">
-<div id="addhack">
-<h2>Congrats!</h2>
-<img src="/static/img/addhack.jpg"></img>
-<h2>You are done! </h2>
-</div>
 </div>
 </div>
 </div>
