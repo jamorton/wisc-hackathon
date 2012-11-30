@@ -1,6 +1,12 @@
+ {% extends "base.html" %}
 
-{% extends "base.html" %}
+{% block use_nav %} {% endblock %}
 
 {% block content %}
-    <h1>Dashboard</h1>
+<div  style="text-align:center;">
+<div class="dashboard-title">{{ hackathon.title }}</div><br />
+
+<h4>{{ hackathon.description }}</h4><br />
+<h4>This hackathon begins on {{ hackathon.start_date }} and ends on {{ hackathon.end_date }}.</h4>
+</div>
 {% endblock %}
