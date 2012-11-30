@@ -2,7 +2,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Landing Page</h1>
+<<<<<<< HEAD
+    <form class="form-search">
+    <input type="text" class="input-medium search-query">
+    <button type="submit" class="btn">Search for hackathons</button>
+    </form>
+    <h1>HackPack</h1>
+<div class="row">
+<div class="span4">
+  <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="../static/img/carousel.png" alt="">
+        </div>
+        <div class="item">
+          <img src="../static/img/carousel2.png" alt="">
+        </div>
+        <div class="item">
+          <img src="../static/img/carousel3.png" alt="">
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+<!-- Create and event list ==== -->
+</div>
+<div class="span5">
+<a class="btn btn-primary btn-large">Create Event</a>
 
     <ul class="nav nav-pills nav-stacked">
 
@@ -16,5 +44,15 @@
 	    </li>
 	    {% endfor %}
     </ul>
+<h3>Current</h3>
+<ol>
+<li>Hackathon 1</li>
+<li>Hackathon 2</li>
+</ol>
+<h3>Upcoming</h3>
+</div>
+</div>
+
+<!-- /Create and event list -->
 
 {% endblock %}
