@@ -4,8 +4,14 @@
 	font-size:60px;
 	text-align:center;
     line-height: 60px;
-    padding-bottom: 10px;
-
+    font-weight: bold;
+}
+.song {
+  text-align: center;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: 100;
+  margin-bottom: 15px;
 }
 .tablelabel{
 	margin-top:14px;
@@ -39,6 +45,13 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 100;
   font-size: 50px;
+}
+
+.dashboard-title {
+  font-size: 50px;
+  line-height: 70px;
+  text-align: center;
+  color: #317EAC;
 }
 
 ul.nav.nav-tabs {
