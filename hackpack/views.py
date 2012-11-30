@@ -16,19 +16,20 @@ def index():
 
 	hackathons_now = []
 	hackathons_future = []
+	hackathon_query = []
 	now = datetime.datetime.now()
 	for h in hackathon_q:
-
-		print "existing hackathons", h.start_date, " and ", h.end_date
 
 		if now < h.start_date:
 			hackathons_future.append(h)
 		elif now < h.end_date:
 			hackathons_now.append(h)
+		hackathon_query.append(h)
 
 	return render_template("index.html",
 						   hackathons_now = hackathons_now,
 						   hackathons_future = hackathons_future,
+						   hackathon_query = hackathon_query,
 						   active = "home")
 
 

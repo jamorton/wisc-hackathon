@@ -79,15 +79,15 @@
           <input type="text" id="search" class="search-query span2" placeholder="Find a Hackathon">
         </form>
         <script type="text/javascript">
-		
+
 		var hackathonTitle = new Array();
 		var urls = new Array();
 		//just loop through all the hackathons and add them. Put the titles in hackathonTitle and urls in urls.
 		//the following generates example data
-		for (var i = 0; i<10; i++){
-			hackathonTitle.push("Hack #"+i);
-			urls.push("http://google.com?q=Hack Number "+i);
-		}
+		{% for h in hackathon_query %}
+		hackathonTitle.push("{{h.title}}");
+			urls.push("hackathon/{{h.id}}");
+		{% endfor %}
         autocomplete(hackathonTitle,urls);
         </script>
         </ul>
