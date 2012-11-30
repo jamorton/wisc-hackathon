@@ -41,6 +41,8 @@ class Hack(BaseModel):
 	github_repo = TextField(default="")
 	url = TextField(default = "")
 	description = TextField(default = "")
+	calculated = BooleanField(default=False)
+	stats = TextField(default="")
 
 def create_tables():
 	Hackathon.create_table()

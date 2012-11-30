@@ -11,7 +11,6 @@ import urllib, urllib2
 from json import JSONDecoder
 import datetime
 
-
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
 	def decorator(fn):
@@ -89,4 +88,17 @@ def ajax_get_repo_stats():
 	response = urllib2.urlopen(req)
 	decoder = JSONDecoder()
 	commits = decoder.decode(response.read())
-	return {"commit-number" : len(commits)}
+	user_commits = {}
+	biggest = 0
+	top_committer = ""
+	for c in commits:
+		committer = c["committer"]
+		if committer == None:
+			continue
+		committer = committer["login"]
+		if ( not user_commits.has_key(committer) ):
+			user_commits[committer] = 0
+		user_commits[committer] = user_commits[committer] + 1
+		if ( user_commits[committer] > biggest ):
+			top_committer = committer
+	return {"commit-number" : len(commits), "top-committer" : top_committer}
