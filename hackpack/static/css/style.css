@@ -44,9 +44,19 @@
 ul.nav.nav-tabs {
   margin-bottom: 10px;
 }
+<<<<<<< HEAD
 #timer{
 	font-size:60px;
 	text-align:center;
     line-height: 60px;
     padding-bottom: 10px;
 }
+=======
+
+footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #888;
+}
+>>>>>>> 65c1a14e78440832345d0c24b2f8f97a4f7a8a03

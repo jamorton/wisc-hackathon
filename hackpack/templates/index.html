@@ -6,7 +6,7 @@
     ================================================== -->
 
 <div class="masthead">
-    <h2>Create and Manage Hackathons</h2>
+    <h2>Create, Manage, and Present Hackathons</h2>
 </div>
 
 <div class="row">
@@ -32,31 +32,41 @@
 
 </div>
 
+<div class="row">
+  <div class="span6">
 {% if hackathons_now %}
-  <h2>Current Hackathons</h2>
+  <h2 style="text-align: center;">Current Hackathons</h2>
   <div>
     {% for hackathon in hackathons_now %}
-      <div class="hackathon-item">
-        <h3><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a></h3>
-        {{ hackathon.description }}. AT: {{ hackathon.location }}
-        <p>FROM: {{ hackathon.start_date }} TO: {{ hackathon.end_date }} </p>
-      </div>
+        <h3 style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a> <small>{{ hackathon.location }}</small></h3>
+        <blockquote>
+            <div><b>Begins:</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }}</div>
+            <b>Ends:</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}
+        </blockquote>
     {% endfor %}
   </div>
 {% endif %}
 
+  </div>
+  <div class="span6">
+
 {% if hackathons_future %}
-  <h2>Future Hackathons</h2>
+
+  <h2 style="text-align: center;">Future Hackathons</h2>
   <div>
     {% for hackathon in hackathons_future %}
-      <div class="hackathon-item">
-	    <h3><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a></h3>
-        {{ hackathon.description }}. AT: {{ hackathon.location }}
-        <p>FROM: {{ hackathon.start_date }} TO: {{ hackathon.end_date }} </p>
-      </div>
+        <h3 style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}">{{ hackathon.title }}</a> <small>{{ hackathon.location }}</small></h3>
+        <blockquote>
+            <div><b>Begins:</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }}</div>
+            <b>Ends:</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}
+        </blockquote>
     {% endfor %}
   </div>
 {% endif %}
+
+  </div>
+</div>
+
 
 <!-- /Create and event list -->
 
