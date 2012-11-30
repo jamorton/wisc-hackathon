@@ -68,12 +68,11 @@ def ajax_create_hackathon():
 		response = urllib2.urlopen(req)
 		decoder = JSONDecoder()
 		hack.facebook_id = decoder.decode(response.read())["id"]
-		"""
 		trivia_str = ""
-		for question in trivia:
-			trivia_str += question + ":" + trivia[question]
+		for question in trivia_info:
+			trivia_str += question + ":" + trivia_info[question]
 
-		hack.trivia = trivia_str"""
+		hack.trivia = trivia_str
 
 		hack.save()
 		return {"hackathon_id": hack.id}
