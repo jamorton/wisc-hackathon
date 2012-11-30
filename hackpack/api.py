@@ -10,6 +10,7 @@ from wtfpeewee.orm import model_form
 import urllib, urllib2
 from json import JSONDecoder
 import datetime
+from trivia import trivia
 
 def api_route(action, **options):
 	requires_login = options.get("requires_login", False)
@@ -67,6 +68,13 @@ def ajax_create_hackathon():
 		response = urllib2.urlopen(req)
 		decoder = JSONDecoder()
 		hack.facebook_id = decoder.decode(response.read())["id"]
+
+		trivia_str = ""
+		for question in trivia:
+			trivia_str += question + ":" + trivia[question]
+
+		hack.trivia = trivia_str
+
 		hack.save()
 		return {"hackathon_id": hack.id}
 
@@ -129,4 +137,4 @@ def ajax_set_questions():
 
 	hackathon = get_object_or_404(Hackathon, id = hackathon)
 	hackathon.trivia = questions
-
+	hackathon.save()
