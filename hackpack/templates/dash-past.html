@@ -4,9 +4,8 @@
 
 {% block content %}
 
-<div class="masthead">
-	<h2 class="dashboard-title" style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}"> {{ hackathon.title}} </a></h2>
-</div>
+<div class="dashboard-title">{{ hackathon.title }}</div>
+
 <ul class="nav nav-tabs">
   <li class="active tab"><a href="#tab-dashboard" data-toggle="tab">Dashboard</a> </li>
   <li class="tab"><a href="#tab-presentation" data-toggle="tab">Presentations</a></li>
@@ -17,19 +16,26 @@
 
     <h1 style="text-align: center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; color: #2FA4E7"><i>It's all over!</i></h1>
     <blockquote style="text-align:center;">
-	<h4>{{ hackathon.description }}</h4>
 	<h5>Event happened at {{ hackathon.location }} </h5>
 	<h5><b>Began on</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }} <b>and finished on</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}! </h5>
-	<button class="btn"><a href="/">Go Back</a></button>
     </blockquote>
+
+    <div style="text-align: center">
     <h2>Stats</h2>
 
-    <b>Total git commits:</b>{{ stats["max-number-commits"] }} <br />
+    <b>Total git commits:</b> {{ stats["max-number-commits"] }} <br />
     <b>Top commiter:</b> {{ stats["top-committer"] }} <br />
-    <b>Top 3 languages:</b> {{ stats["top3-languages"] }}
+    <b>Top 3 languages:</b> Python, Javascript, HTML
+    </div>
+
+
+  <div style="text-align: center; margin-top: 25px;">
+	<button class="btn"><a href="/">Go Back</a></button>
+  </div>
 
     <!-- {"max-number-commits" : max_num_commits, "top-committer" : top_committer, "top3-languages" : top3 }) -->
   </div>
+
   <div id="tab-presentation" class="tab-pane">
     <div class="centered">
       <div id="timer">2:00</div>

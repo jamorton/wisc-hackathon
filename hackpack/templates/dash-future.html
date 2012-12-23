@@ -3,7 +3,7 @@
 {% block use_nav %} {% endblock %}
 
 {% block content %}
-<div  style="text-align:center;">
+<div style="text-align:center;">
 	<div class="dashboard-title" style="margin-bottom: 0;"><a href="/hackathon/{{ hackathon.id }}"> {{ hackathon.title }} </a></div><br />
 	<blockquote>
 		<h4>{{ hackathon.description }}</h4>
@@ -11,4 +11,5 @@
 		<h5><b>Begins on</b> {{ hackathon.start_date.strftime("%a %b %d at %I:%M %p") }} <b>and ends on</b> {{ hackathon.end_date.strftime("%a %b %d at %I:%M %p") }}! </h5>
 	</blockquote>
 	<button class="btn"><a href="/">Go Back</a></button>
+</div>
 {% endblock %}
